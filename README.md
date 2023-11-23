@@ -61,6 +61,27 @@ You are a pro of minecraft and know every recipe by heart? We'll see that! Try t
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Features
+
+- [ ] Access the crafting table
+- [ ] Click and drop items on the crafting table
+- [ ] Craft predefined items when the recipe is correct
+- [ ] Store crafted items in the inventory
+- [ ] Items can be used to craft other items
+- [ ] Items can be discarded
+- [ ] Stacking items and splitting stacks
+- [ ] Generate a random items
+- [ ] Tools can be used to generate items
+- [ ] Tools can be crafted
+- [ ] Can process items (smelting, etc...)
+- [ ] Display the list of all the achievments (items crafted)
+- [ ] Achievments can be unlocked
+- [ ] Can register player name on save
+- [ ] Player can have multiple local saves
+- [ ] All items are existing
+- [ ] All receipes are existing
+- [ ] All sprites are existing
+
 ### Built With
 
 [![Next][Next.js]][Next-url]
