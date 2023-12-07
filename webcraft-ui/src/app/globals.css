@@ -1,0 +1,111 @@
+:root{
+  --box-border-width: 3.5px;
+  --box-size:40px;
+}
+
+@font-face {
+  font-family: 'minecraftregular';
+  src: url('../../public/fonts/minecraftregular-bmg3-webfont.woff') format('woff'),
+       url('../../public/fonts/minecraftregular-bmg3-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+body{
+  font-family: minecraftregular;
+  position: relative;
+  margin: 0;
+  height: 100dvh;
+  width: 100dvw;
+  overflow: hidden;
+  color: white;
+}
+
+body::before{
+ content:"";
+ position: absolute;
+ inset: 0;
+ background: url(../../public/images/dirt.jpg);
+ background-size: 5rem;
+ filter: brightness(30%);
+ z-index: -1;
+}
+
+td{
+  vertical-align: middle;
+}
+
+.box {
+  position: relative;
+  height: var(--box-size);
+  width: var(--box-size);
+  background-color: #8b8b8b;
+  box-shadow: 
+  calc(-1 * var(--box-border-width)) calc(-1 * var(--box-border-width)) 0 0 #373737,
+   calc(-1 * var(--box-border-width)) 0 0 0 #373737, 
+   0 calc(-1 * var(--box-border-width)) 0 0 #373737, 
+   var(--box-border-width) 0 0 0 #ffffff, 
+   0 var(--box-border-width) 0 0 #ffffff, 
+   var(--box-border-width) var(--box-border-width) 0 0 #ffffff, 
+   var(--box-border-width) calc(-1 * var(--box-border-width)) 0 0 #8b8b8b, 
+   calc(-1 * var(--box-border-width)) var(--box-border-width) 0 0 #8b8b8b;
+
+}
+
+
+.box::before{
+  content: "";
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+
+.box:hover::before{
+  background-color: rgba(255, 255, 255,  0.4);
+}
+
+table{
+  margin: 40px 100px 0 0;
+  padding: 20px;
+  border-collapse: separate; 
+  border-spacing: calc(var(--box-border-width) * 2);
+  background-color: #c6c6c6;
+}
+
+
+
+.holding{
+  pointer-events: none;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.item{
+  display: inline-block;
+  position:absolute; 
+  inset:0;
+  width:  var(--box-size); 
+  height: var(--box-size); 
+  background-size: 100%; 
+  background-repeat: no-repeat;
+}
+
+.item::after{
+  content : attr(data-count);
+  text-shadow: #373737 2px 2px;
+  font-size: 23px;
+  position: absolute;
+  pointer-events: none;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+
