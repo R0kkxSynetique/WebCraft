@@ -1,9 +1,17 @@
+<<<<<<< HEAD
+=======
+from typing import Union
+
+from dotenv import load_dotenv, find_dotenv
+>>>>>>> feature/database_connection
 from fastapi import FastAPI
 from service.save import *
 from service.item import *
 from service.recipe import *
 from service.inventory import *
 
+from mongo import *
+load_dotenv(find_dotenv())
 app = FastAPI()
 
 
