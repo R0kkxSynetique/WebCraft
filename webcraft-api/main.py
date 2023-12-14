@@ -5,11 +5,10 @@ from service.save import *
 from service.item import *
 from service.recipe import *
 from service.inventory import *
-
 from mongo import *
 load_dotenv(find_dotenv())
-app = FastAPI()
 
+app = FastAPI()
 
 @app.get("/")
 async def route():
