@@ -31,7 +31,9 @@ export default function Home() {
         }
     };
 
-    fetchData();
+    useEffect(() => {
+        fetchData();
+    }, []);
 
 
     return (
@@ -39,7 +41,7 @@ export default function Home() {
             <h1>Select a save</h1>
             <div className='saves'>
 
-            <Suspense fallback={<LoadingSaves />}>
+                <Suspense fallback={<LoadingSaves />}>
                     {areSavesLoading ? (
                         <LoadingSaves />
                     ) : (
@@ -68,7 +70,7 @@ export default function Home() {
 
             </div>
             <div className='buttons'>
-                <button id='play'disabled={!isSelected}>
+                <button id='play' disabled={!isSelected}>
                     Play Selected Save
                 </button>
                 <button id='create' disabled={areSavesLoading || saves.length >= 3}>Create a New Save</button>

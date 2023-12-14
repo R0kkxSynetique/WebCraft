@@ -3,7 +3,12 @@
 import "../home.css"
 import React from 'react'
 
+import { useRouter } from 'next/navigation'
+
+
 const rename = () => {
+    const router = useRouter()
+
     return (
         <div className="home">
             <span className='page-title'>Rename Save</span>
@@ -14,9 +19,9 @@ const rename = () => {
                 </div>
                 <div>
                     <input type="submit" value="Rename"></input>
-                    <button id='Cancel'>Cancel</button>
                 </div>
             </form>
+                    <button onClick={() => router.push('/saves')} id='Cancel'>Cancel</button>
         </div>
     )
 }
