@@ -1,7 +1,10 @@
 from typing import Union
 
+from dotenv import load_dotenv, find_dotenv
 from fastapi import FastAPI
 
+from mongo import *
+load_dotenv(find_dotenv())
 app = FastAPI()
 
 
