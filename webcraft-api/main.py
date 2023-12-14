@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-=======
 from typing import Union
-
 from dotenv import load_dotenv, find_dotenv
->>>>>>> feature/database_connection
 from fastapi import FastAPI
 from service.save import *
 from service.item import *
