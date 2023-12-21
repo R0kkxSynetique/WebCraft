@@ -1,5 +1,8 @@
 import os
+
 from pymongo import MongoClient
+
+from bson.json_util import dumps
 
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
@@ -24,3 +27,9 @@ class Mongo:
         x = coll.find_one({"id": id}, {'_id': 0})
         x = jsonable_encoder(x)
         return JSONResponse(content=x)
+    
+    def getRandomItem(self):
+        coll = self.__db["items"]
+        random_item = coll.aggregate([{ '$sample': { 'size': 1 } }]).next()
+        random_item_json = dumps(random_item)
+        return JSONResponse(content=random_item_json)
