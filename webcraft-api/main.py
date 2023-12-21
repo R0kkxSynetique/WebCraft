@@ -1,45 +1,51 @@
+from typing import Union
+from dotenv import load_dotenv, find_dotenv
 from fastapi import FastAPI
-from service.get_save import getSave
+from service.save import *
+from service.item import *
+from service.recipe import *
+from service.inventory import *
+from mongo import *
+load_dotenv(find_dotenv())
 
 app = FastAPI()
 
-
 @app.get("/")
-async def route1():
+async def route():
     return {"message": "Hello to Webcraft API!"}
 
 @app.get("/save/{inventory_id}")
-async def route2():
-    return {"message": "get save content with save id"}
+async def route(inventory_id):
+    return getSave(inventory_id)
 
 @app.post("/save/{inventory_id}")
-async def route3(inventory: str):
-    return {"message": "save to json on body"}
+async def route(inventory_id, inventory: str):
+    return postSave(inventory_id, inventory)
 
 @app.get("/item/random")
 async def route():
-    return {"message": "get random item"}
+    return getRandomItem()
 
 @app.post("/recipe")
 async def route(craftingTable: str):
-    return {"message": "get recipe with json on body and return item id crafted"}
+    return getRecipe(craftingTable)
 
 @app.get("/inventory/{user_id}")
-async def route():
-    return {"message": "get all inventory with user id"}
+async def route(user_id):
+    return getAllInventory(user_id)
 
 @app.post("/inventory/{user_id}/create")
-async def route(name: str):
-    return {"message": "create inventory with user id on body"}
+async def route(user_id, name: str):
+    return createInventory(user_id, name)
 
 @app.patch("/inventory/{inventory_id}")
-async def route(name: str):
-    return {"message": "rename inventory with name on body"}
+async def route(inventory_id, name: str):
+    return updateInventory(inventory_id, name)
 
 @app.delete("/inventory/{inventory_id}")
-async def route():
-    return {"message": "delete inventory with inventory id"}
+async def route(inventory_id):
+    return deleteInventory(inventory_id)
 
 @app.delete("/item/{item_id}/{inventory_id}/{amount}")
-async def route():
-    return {"message": "delete item with item id and amount on inventory id"}
+async def route(item_id, inventory_id, amount):
+    return deleteItem(item_id, inventory_id, amount)
