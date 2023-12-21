@@ -30,6 +30,5 @@ class Mongo:
     
     def getRandomItem(self):
         coll = self.__db["items"]
-        random_item = coll.aggregate([{ '$sample': { 'size': 1 } }]).next()
-        random_item_json = dumps(random_item)
-        return JSONResponse(content=random_item_json)
+        random_item = coll.aggregate([{ '$sample': { 'size': 1 } },{'$project':{'_id':0}}]).next()
+        return JSONResponse(content=random_item)
