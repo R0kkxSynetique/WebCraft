@@ -16,12 +16,6 @@ class Mongo:
         client = MongoClient(CONNECTION_STRING)
         return client[os.getenv("DATABASE")]
 
-    def findAnItem(self):
-        coll = self.__db["items"]
-        x = coll.find_one(None, {'_id': 0})
-        x = jsonable_encoder(x)
-        return JSONResponse(content=x)
-
     def getItemById(self, id):
         coll = self.__db["items"]
         x = coll.find_one({"id": id}, {'_id': 0})
