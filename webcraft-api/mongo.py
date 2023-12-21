@@ -26,3 +26,9 @@ class Mongo:
         coll = self.__db["items"]
         random_item = coll.aggregate([{ '$sample': { 'size': 1 } },{'$project':{'_id':0}}]).next()
         return JSONResponse(content=random_item)
+    
+    def getRecipeById(self, id):
+        coll = self.__db["recipes"]
+        x = coll.find_one({str(id): {"$type":3}}, {'_id': 0})
+        x = jsonable_encoder(x)
+        return JSONResponse(content=x)
