@@ -18,9 +18,9 @@ class Mongo:
 
     def getItemById(self, id):
         coll = self.__db["items"]
-        x = coll.find_one({"id": id}, {'_id': 0})
-        x = jsonable_encoder(x)
-        return JSONResponse(content=x)
+        item = coll.find_one({"id": id}, {'_id': 0})
+        item = jsonable_encoder(item)
+        return JSONResponse(content=item)
     
     def getRandomItem(self):
         coll = self.__db["items"]
@@ -29,6 +29,6 @@ class Mongo:
     
     def getRecipeById(self, id):
         coll = self.__db["recipes"]
-        x = coll.find_one({str(id): {"$type":3}}, {'_id': 0})
-        x = jsonable_encoder(x)
-        return JSONResponse(content=x)
+        recipe = coll.find_one({str(id): {"$type":3}}, {'_id': 0})
+        recipe = jsonable_encoder(recipe)
+        return JSONResponse(content=recipe)
