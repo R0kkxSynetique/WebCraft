@@ -1,6 +1,8 @@
 import Stack from './Stack.js';
+import { getCraft } from '@/services/stack.js';
 
-export const GameScript = () => {
+export const GameScript = (setIsCraftLoading) => {
+
 
     // Array of all Stacks
     let logicalStacks = []
@@ -8,10 +10,10 @@ export const GameScript = () => {
     // itemsCount, itemId, location, name, stackidIncrement
     let id = 0
     let fish3 = new Stack(32, 1, 4, "Pufferfish", id)
-id++
-let fish4 = new Stack(63, 3, 2, "dragon-egg", id)
-id++
-let fish5 = new Stack(50, 2, 3, "oak_planks", id)
+    id--
+    let fish4 = new Stack(63, 3, 2, "dragon-egg", id)
+    id--
+    let fish5 = new Stack(50, 2, 3, "oak_planks", id)
 
     logicalStacks.push(fish3, fish4, fish5)
 
@@ -19,6 +21,9 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
     logicalStacks.forEach(stack => {
         document.getElementById(`box-${stack.location}`).appendChild(stack.view())
     });
+
+    console.log(logicalStacks)
+
 
     // check if box is already in a stack location
     function checkBoxAvailability(boxId) {
@@ -38,7 +43,7 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
     let holderBox = document.getElementById('box-0');
     let boxes = document.getElementsByClassName('box');
     let stacks = document.getElementsByClassName('item');
-
+    let craftingBox = document.getElementById("box-1001")
     // {instance : stack, view : stack.viewOnBoard}
     let currentlyDraggedStack
 
@@ -57,6 +62,14 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
 
     function listenItem(stack, stackLogic = findStackInstance(stack.dataset.stackId)) {
 
+        // if (stackLogic && stackLogic.stackId) {
+        //     if (!logicalStacks.some(stack => stack.id === stackLogic.stackId)){
+        //         // logicalStacks.push(stackLogic)
+        //     }
+        // }
+
+
+
         // find clicked stack data 
         let currentStackId = stack.dataset.stackId;
         let currentStackInstance = findStackInstance(currentStackId);
@@ -73,7 +86,7 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
             // split stack on simple right click
             if (!currentlyDraggedStack) {
 
-                let newStack = currentStackInstance.split()
+                let newStack = stackLogic.split()
 
                 // drag splitted stack
                 if (newStack) {
@@ -84,46 +97,57 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
                 }
 
                 // display old stack count
-                if (currentStackInstance.count > 1) {
-                    stack.dataset.count = currentStackInstance.count
+                if (stackLogic.count > 1) {
+                    stack.dataset.count = stackLogic.count
 
-                } else if (currentStackInstance.count == 1) {
+                } else if (stackLogic.count == 1) {
                     stack.dataset.count = ""
                 }
                 else {
                     //remove old stack from logicalStacks
                     logicalStacks = logicalStacks.filter(function (stack) {
-                        return stack.stackId !== currentStackInstance.stackId
+                        return stack.stackId !== stackLogic.stackId
                     })
 
                     stack.parentNode.innerHTML = ""
                 }
+            }
+
+            if (stackLogic.location > 0 && stackLogic.location < 10) {
+                getCraftResult()
             }
         })
 
 
         // left click actions
         stack.onclick = function (e) {
+
+            console.log(logicalStacks)
+
             // do nothing if we are dragging a stack (to trigger only the box behind and drop the stack)
             if (!currentlyDraggedStack) {
                 e.stopPropagation();
                 move(e, stackLogic, stack)
 
-            } else if (currentlyDraggedStack && currentlyDraggedStack.instance.itemId != currentStackInstance.itemId) {
+            } else if (currentlyDraggedStack && currentlyDraggedStack.instance.itemId != stackLogic.itemId) {
                 e.stopPropagation();
 
                 let box = stack.parentNode
 
                 box.innerHTML = ""
-                currentlyDraggedStack.instance.location = currentStackInstance.location
+                currentlyDraggedStack.instance.location = stackLogic.location
                 box.appendChild(currentlyDraggedStack.instance.view())
                 listenItem(box.firstChild)
 
-                currentStackInstance.location = 0
+                stackLogic.location = 0
 
                 currentlyDraggedStack = null
                 holderBox.innerHTML = ""
-                move(e, currentStackInstance, stack)
+                move(e, stackLogic, stack)
+            }
+
+            if (stackLogic.location > 0 && stackLogic.location < 10) {
+                getCraftResult()
             }
         }
     }
@@ -160,7 +184,7 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
 
         // right click actions
         box.addEventListener('contextmenu', function (e) {
-            if (currentlyDraggedStack) {
+            if (currentlyDraggedStack && boxId <= 999) {
 
                 if (box.firstChild && findStackInstance(box.firstChild.dataset.stackId).itemId == currentlyDraggedStack.instance.itemId) {
 
@@ -214,16 +238,44 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
                         currentlyDraggedStack.view.parentNode.innerHTML = ""
                         currentlyDraggedStack = null
                     }
+
+                    if (boxId > 0 && boxId < 10) {
+                        getCraftResult()
+                    }
+                }
+                if (!currentlyDraggedStack) {
+                    saveState()
+                }
+
+            } else if (currentlyDraggedStack && boxId == 1002) {
+                // move to trash 
+                if (currentlyDraggedStack.instance.count > 1) {
+                    // decrement dragged stack
+                    currentlyDraggedStack.instance.add(-1)
+                    if (currentlyDraggedStack.instance.count > 1) {
+                        currentlyDraggedStack.view.dataset.count = currentlyDraggedStack.instance.count
+                    } else {
+                        currentlyDraggedStack.view.dataset.count = ""
+                    }
+                } else {
+                    //remove old stack from logicalStacks
+                    logicalStacks = logicalStacks.filter(function (stack) {
+                        return stack.stackId !== currentlyDraggedStack.instance.stackId
+                    })
+
+                    currentlyDraggedStack.view.parentNode.innerHTML = ""
+                    currentlyDraggedStack = null
                 }
             }
         })
 
         // left click actions
         box.onclick = function (e) {
-
+            console.log(logicalStacks)
             // drop the dragged stack inthe box
             if (currentlyDraggedStack && boxId <= 999) {
                 if (checkBoxAvailability(boxId)) {
+
 
                     currentlyDraggedStack.view.classList.remove('holding')
                     box.appendChild(holderBox.firstChild)
@@ -233,6 +285,10 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
                     currentlyDraggedStack = null
                     holderBox.innerHTML = ''
 
+
+                    if (boxId > 0 && boxId < 10) {
+                        getCraftResult()
+                    }
                 } else {
                     let initialChildView = box.firstChild
                     let initialChildInstace = findStackInstance(initialChildView.dataset.stackId)
@@ -261,6 +317,25 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
 
 
                 box.firstChild.style.inset = "0"
+
+                if (!currentlyDraggedStack) {
+                    saveState()
+                }
+
+            } else if (currentlyDraggedStack && boxId == 1002) {
+                // move to trash 
+                logicalStacks = logicalStacks.filter(function (stack) {
+                    return stack.stackId !== currentlyDraggedStack.instance.stackId
+                })
+
+                currentlyDraggedStack.view.classList.remove('holding')
+                currentlyDraggedStack = null
+                holderBox.innerHTML = ''
+
+
+                if (boxId > 0 && boxId < 10) {
+                    getCraftResult()
+                }
             }
         };
     }
@@ -281,4 +356,55 @@ let fish5 = new Stack(50, 2, 3, "oak_planks", id)
         listenItem(stack)
     }
 
+
+
+
+
+
+    // calls api
+
+    const getCraftResult = async () => {
+
+        setIsCraftLoading(true)
+        // Remove current craft result
+
+        //remove old stack from logicalStacks
+        if (craftingBox.firstChild) {
+
+            logicalStacks = logicalStacks.filter(function (stack) {
+                return stack.location !== 1001
+            })
+
+            craftingBox.innerHTML = ""
+        }
+
+
+
+
+        let ingredients = []
+
+        logicalStacks.forEach(stack => {
+            if (stack.location > 0 ** stack.location < 10) {
+                ingredients.push(stack)
+            }
+        });
+
+        let getNewStack = await getCraft(ingredients)
+
+        // itemsCount, itemId, location, name
+        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1001, getNewStack.name)
+        craftingBox.appendChild(newStack.view())
+
+
+        listenItem(craftingBox.firstChild, newStack)
+        logicalStacks.push(newStack)
+        setIsCraftLoading(false)
+    }
+
+
+
+    const saveState = () => {
+        console.log("save")
+    }
 }
+
