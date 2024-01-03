@@ -24,6 +24,13 @@ export default function Home() {
         }
     }
 
+    const log = () => {
+        let rand = Math.round(Math.random()* (10000000 - 1000000) + 1000000)
+        let timestamp = new Date().getTime()
+
+        localStorage.setItem("user-id", rand.toString() + timestamp.toString());
+    }
+
     const fetchData = async () => {
         try {
             setSaves(await getSaves())
@@ -35,7 +42,12 @@ export default function Home() {
     };
 
     useEffect(() => {
+        if (!localStorage.getItem("user-id")) {
+            log()
+        }
+
         fetchData();
+
     }, []);
 
 
@@ -60,7 +72,7 @@ export default function Home() {
                                         setSelectedSave(save.id);
                                     }}
                                     onClick={() => handleClick(save.title)}
-                                    // onBlur={() => setSelectedSave(false)}
+                                // onBlur={() => setSelectedSave(false)}
                                 >
                                     <h1 className='title'>{save.title}</h1>
                                     <span className='last-played'>Last Played ({save.lastPlayed})</span>
@@ -75,8 +87,8 @@ export default function Home() {
                 <button id='play' disabled={!selectedSave} onClick={() => router.push(`/game?${selectedSave}`)}>
                     Play Selected Save
                 </button>
-                <button id='create' disabled={areSavesLoading || saves.length >= 3}>Create a New Save</button>
-                <button id='rename' disabled={!selectedSave}  onClick={() => router.push(`/saves/edit?${selectedSave}`)}>Rename Selected Save</button>
+                <button id='create' disabled={areSavesLoading || saves.length >= 3} onClick={() => router.push(`/saves/create`)}>Create a New Save</button>
+                <button id='rename' disabled={!selectedSave} onClick={() => router.push(`/saves/edit?${selectedSave}`)}>Rename Selected Save</button>
                 <button id='delete' disabled={!selectedSave}>Delete Selected Save</button>
             </div>
         </section>
