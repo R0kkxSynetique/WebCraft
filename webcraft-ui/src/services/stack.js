@@ -25,3 +25,12 @@ export const getCraft = async (ingredients) => {
 
     return await data.json();
 }
+
+export const generateItem = async ()=> {
+    const data = await fetch("http://localhost:5000/generate", {
+        method: 'GET',
+        headers: new Headers({'Content-Type': 'application/json'}),
+    })
+
+    return await data.json();
+}

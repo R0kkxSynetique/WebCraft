@@ -1,9 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Board from './Board'
-import { GameScript } from './game'
-
-
+import GameScript from './game'
 const game = () => {
 
     const [isCraftLoading, setIsCraftLoading] = useState(false)

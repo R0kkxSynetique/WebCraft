@@ -5,12 +5,15 @@ import React, { useRef, useEffect, useState, Suspense } from 'react';
 import './home.css';
 import Loading, { LoadingSaves } from './loading';
 import { getSaves } from '@/services/saves';
+import { useRouter } from 'next/navigation'
+
 
 export default function Home() {
     const [selectedSave, setSelectedSave] = useState();
-    const [isSelected, setIsSelected] = useState(false);
     const [saves, setSaves] = useState([]);
     const [areSavesLoading, setAreSavesLoading] = useState(true);
+
+    const router = useRouter()
 
 
     const saveRefs = useRef({});
@@ -51,14 +54,13 @@ export default function Home() {
                                 <div
                                     key={save.title}
                                     ref={saveRefs.current[save.title]}
-                                    className='save'
+                                    className={selectedSave == save.id ? "save save-selected" : "save"}
                                     tabIndex="0"
                                     onFocus={() => {
-                                        setSelectedSave(save.title);
-                                        setIsSelected(true);
+                                        setSelectedSave(save.id);
                                     }}
                                     onClick={() => handleClick(save.title)}
-                                    onBlur={() => setIsSelected(false)}
+                                    // onBlur={() => setSelectedSave(false)}
                                 >
                                     <h1 className='title'>{save.title}</h1>
                                     <span className='last-played'>Last Played ({save.lastPlayed})</span>
@@ -70,12 +72,12 @@ export default function Home() {
 
             </div>
             <div className='buttons'>
-                <button id='play' disabled={!isSelected}>
+                <button id='play' disabled={!selectedSave} onClick={() => router.push(`/game?${selectedSave}`)}>
                     Play Selected Save
                 </button>
                 <button id='create' disabled={areSavesLoading || saves.length >= 3}>Create a New Save</button>
-                <button id='rename' disabled={!isSelected}>Rename Selected Save</button>
-                <button id='delete' disabled={!isSelected}>Delete Selected Save</button>
+                <button id='rename' disabled={!selectedSave}  onClick={() => router.push(`/saves/edit?${selectedSave}`)}>Rename Selected Save</button>
+                <button id='delete' disabled={!selectedSave}>Delete Selected Save</button>
             </div>
         </section>
     );

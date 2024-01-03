@@ -1,8 +1,7 @@
 import Stack from './Stack.js';
-import { getCraft } from '@/services/stack.js';
+import { getCraft, generateItem } from '@/services/stack.js';
 
-export const GameScript = (setIsCraftLoading) => {
-
+const GameScript = (setIsCraftLoading) => {
 
     // Array of all Stacks
     let logicalStacks = []
@@ -15,15 +14,13 @@ export const GameScript = (setIsCraftLoading) => {
     id--
     let fish5 = new Stack(50, 2, 3, "oak_planks", id)
 
+
     logicalStacks.push(fish3, fish4, fish5)
 
     // spawn all stacks on board
     logicalStacks.forEach(stack => {
         document.getElementById(`box-${stack.location}`).appendChild(stack.view())
     });
-
-    console.log(logicalStacks)
-
 
     // check if box is already in a stack location
     function checkBoxAvailability(boxId) {
@@ -44,9 +41,9 @@ export const GameScript = (setIsCraftLoading) => {
     let boxes = document.getElementsByClassName('box');
     let stacks = document.getElementsByClassName('item');
     let craftingBox = document.getElementById("box-1001")
+    let generatingBox = document.getElementById("box-1000")
     // {instance : stack, view : stack.viewOnBoard}
     let currentlyDraggedStack
-
 
     function followCursor(e) {
         currentlyDraggedStack.view.style.left = e.clientX - offsetX - 22 + "px";
@@ -61,14 +58,6 @@ export const GameScript = (setIsCraftLoading) => {
 
 
     function listenItem(stack, stackLogic = findStackInstance(stack.dataset.stackId)) {
-
-        // if (stackLogic && stackLogic.stackId) {
-        //     if (!logicalStacks.some(stack => stack.id === stackLogic.stackId)){
-        //         // logicalStacks.push(stackLogic)
-        //     }
-        // }
-
-
 
         // find clicked stack data 
         let currentStackId = stack.dataset.stackId;
@@ -121,8 +110,6 @@ export const GameScript = (setIsCraftLoading) => {
 
         // left click actions
         stack.onclick = function (e) {
-
-            console.log(logicalStacks)
 
             // do nothing if we are dragging a stack (to trigger only the box behind and drop the stack)
             if (!currentlyDraggedStack) {
@@ -271,7 +258,6 @@ export const GameScript = (setIsCraftLoading) => {
 
         // left click actions
         box.onclick = function (e) {
-            console.log(logicalStacks)
             // drop the dragged stack inthe box
             if (currentlyDraggedStack && boxId <= 999) {
                 if (checkBoxAvailability(boxId)) {
@@ -356,12 +342,26 @@ export const GameScript = (setIsCraftLoading) => {
         listenItem(stack)
     }
 
-
-
-
+    // Auto generate random items
+    setInterval(() => {
+        if (!generatingBox.firstChild) {
+            generate()
+        }
+    }, 1000);
 
 
     // calls api
+    const generate = async () => {
+
+        let getNewStack = await generateItem()
+        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1002, getNewStack.name)
+        generatingBox.appendChild(newStack.view())
+
+
+        listenItem(generatingBox.firstChild, newStack)
+        logicalStacks.push(newStack)
+    }
+
 
     const getCraftResult = async () => {
 
@@ -378,9 +378,6 @@ export const GameScript = (setIsCraftLoading) => {
             craftingBox.innerHTML = ""
         }
 
-
-
-
         let ingredients = []
 
         logicalStacks.forEach(stack => {
@@ -390,8 +387,6 @@ export const GameScript = (setIsCraftLoading) => {
         });
 
         let getNewStack = await getCraft(ingredients)
-
-        // itemsCount, itemId, location, name
         let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1001, getNewStack.name)
         craftingBox.appendChild(newStack.view())
 
@@ -401,10 +396,12 @@ export const GameScript = (setIsCraftLoading) => {
         setIsCraftLoading(false)
     }
 
-
+    // Check if there is a result to the initial craft
+    getCraftResult()
 
     const saveState = () => {
         console.log("save")
     }
 }
 
+export default GameScript

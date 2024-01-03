@@ -6,6 +6,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 
 
+
 const rename = () => {
     const router = useRouter()
 
@@ -19,9 +20,9 @@ const rename = () => {
                 </div>
                 <div>
                     <input type="submit" value="Rename"></input>
+                    <button onClick={(e) => { e.preventDefault(); router.push('/saves')}} id='Cancel'>Cancel</button>
                 </div>
             </form>
-                    <button onClick={() => router.push('/saves')} id='Cancel'>Cancel</button>
         </div>
     )
 }

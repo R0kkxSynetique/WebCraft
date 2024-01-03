@@ -19,7 +19,6 @@
 
   /* top and bottom inner shadow */
   box-shadow: inset 0 15px 1rem -10px black, inset 0 -15px 1rem -10px black;
-
 }
 
 .save {
@@ -28,7 +27,7 @@
   cursor: pointer;
 }
 
-.save:focus {
+.save-selected {
   outline: 4px solid var(--grey);
 }
 
