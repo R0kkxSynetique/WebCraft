@@ -14,7 +14,7 @@ class Mongo:
     def __get_database(self):
         CONNECTION_STRING = os.getenv("MONGO_CONNECTION_STRING")
         client = MongoClient(CONNECTION_STRING)
-        return client[os.getenv("DATABASE")]
+        return client[os.getenv("DB_NAME")]
 
     def getItemById(self, id):
         coll = self.__db["items"]
