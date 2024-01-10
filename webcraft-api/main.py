@@ -1,18 +1,51 @@
 from typing import Union
-
 from dotenv import load_dotenv, find_dotenv
 from fastapi import FastAPI
-
+from service.save import *
+from service.item import *
+from service.recipe import *
+from service.inventory import *
 from mongo import *
 load_dotenv(find_dotenv())
+
 app = FastAPI()
 
-
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
+async def route():
+    return {"message": "Hello to Webcraft API!"}
 
+@app.get("/save/{inventory_id}")
+async def route(inventory_id):
+    return getSave(inventory_id)
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/save/{inventory_id}")
+async def route(inventory_id, inventory: str):
+    return postSave(inventory_id, inventory)
+
+@app.get("/item/random")
+async def route():
+    return getRandomItem()
+
+@app.post("/recipe")
+async def route(craftingTable: str):
+    return getRecipe(craftingTable)
+
+@app.get("/inventory/{user_id}")
+async def route(user_id):
+    return getAllInventory(user_id)
+
+@app.post("/inventory/{user_id}/create")
+async def route(user_id, name: str):
+    return createInventory(user_id, name)
+
+@app.patch("/inventory/{inventory_id}")
+async def route(inventory_id, name: str):
+    return updateInventory(inventory_id, name)
+
+@app.delete("/inventory/{inventory_id}")
+async def route(inventory_id):
+    return deleteInventory(inventory_id)
+
+@app.delete("/item/{item_id}/{inventory_id}/{amount}")
+async def route(item_id, inventory_id, amount):
+    return deleteItem(item_id, inventory_id, amount)

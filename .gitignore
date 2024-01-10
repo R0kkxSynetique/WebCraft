@@ -131,3 +131,5 @@ dist
 .pnp.*
 
 webcraft-api/__pycache__/
+
+webcraft-api/service/__pycache__/
