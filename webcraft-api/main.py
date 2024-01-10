@@ -9,6 +9,8 @@ from mongo import *
 
 from models.Save import Save
 from models.inventory import *
+from models.CraftingTable import CraftingTable
+
 load_dotenv(find_dotenv())
 
 app = FastAPI()
@@ -31,8 +33,8 @@ async def route():
     return getRandomItem(db)
 
 @app.post("/recipe")
-async def route(craftingTable: str):
-    return getRecipe(craftingTable, db)
+async def create_Recipe(craftingTable: CraftingTable):
+    return getRecipe(craftingTable.ingredients)
 
 @app.get("/inventory/{user_id}")
 async def route(user_id):

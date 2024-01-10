@@ -1,4 +1,5 @@
 from mongo import *
 
-def getRecipe(craftingTable: str):
-    return {"message": "get recipe with crafting table"}
+def getRecipe(ingredients):
+    db = Mongo()
+    return db.getRecipesByIngredientsId(ingredients)
