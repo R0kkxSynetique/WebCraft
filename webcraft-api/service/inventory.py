@@ -10,4 +10,4 @@ def updateInventory(inventory_id, name: str, date: str, db: Mongo):
     return db.updateInventory(inventory_id, name, date)
 
 def deleteInventory(inventory_id, db: Mongo):
-    return {"message": "deleteInventory"}
+    return db.deleteInventory(inventory_id)
