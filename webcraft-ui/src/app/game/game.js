@@ -1,8 +1,9 @@
 import Stack from './Stack.js';
 import { getCraft, generateItem } from '@/services/stack.js';
+import {save} from '@/services/saves.js';
 import { useEffect } from 'react';
 
-const GameScript = (setIsCraftLoading) => {
+const GameScript = (setIsCraftLoading, initialItems) => {
 
 
     // Array of all Stacks
@@ -385,26 +386,21 @@ const GameScript = (setIsCraftLoading) => {
     }
 
     const saveState = () => {
-        console.log("save")
+        save(logicalStacks)
     }
-
-
-
 
 
     // Check if there is a result to the initial craft
     getCraftResult()
 
-    // itemsCount, itemId, location, name, stackidIncrement
+
+    // Load initial items state
     let id = 0
-    let fish3 = new Stack(32, 1, 4, "Pufferfish", id)
-    id--
-    let fish4 = new Stack(63, 3, 2, "dragon-egg", id)
-    id--
-    let fish5 = new Stack(50, 2, 3, "oak_planks", id)
 
-
-    logicalStacks.push(fish3, fish4, fish5)
+    initialItems.forEach(item => {
+        logicalStacks.push(new Stack(item.quantity, item.id, item.slot, item.name, id))
+        id--
+    })
 
     // spawn all stacks on board
     logicalStacks.forEach(stack => {

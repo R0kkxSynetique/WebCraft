@@ -84,11 +84,11 @@ export default function Home() {
 
             </div>
             <div className='buttons'>
-                <button id='play' disabled={!selectedSave} onClick={() => router.push(`/game?${selectedSave}`)}>
+                <button id='play' disabled={!selectedSave} onClick={() => router.push(`/game?save=${selectedSave}`)}>
                     Play Selected Save
                 </button>
                 <button id='create' disabled={areSavesLoading || saves.length >= 3} onClick={() => router.push(`/saves/create`)}>Create a New Save</button>
-                <button id='rename' disabled={!selectedSave} onClick={() => router.push(`/saves/edit?${selectedSave}`)}>Rename Selected Save</button>
+                <button id='rename' disabled={!selectedSave} onClick={() => router.push(`/saves/edit?save=${selectedSave}`)}>Rename Selected Save</button>
                 <button id='delete' disabled={!selectedSave}>Delete Selected Save</button>
             </div>
         </section>
