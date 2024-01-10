@@ -2,6 +2,9 @@ import os
 
 from pymongo import MongoClient
 
+from bson.json_util import dumps
+from bson.objectid import ObjectId
+
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 class Mongo:
@@ -37,3 +40,11 @@ class Mongo:
         inventories = list(inventories)
         res = jsonable_encoder(inventories)
         return JSONResponse(content=res)
+
+    def getSaveById(self, id):
+        coll = self.__db["inventories"]
+        obj_id = ObjectId(id)
+        save = coll.find_one({"_id": obj_id}, {'_id': 0})
+        save = jsonable_encoder(save)
+        return JSONResponse(content=save)
+
