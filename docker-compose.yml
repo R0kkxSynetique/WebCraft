@@ -6,12 +6,24 @@ services:
     restart: unless-stopped
     volumes:
       - mongodb-data:/data/db
-
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_ROOT_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASS}
       MONGO_INITDB_DATABASE: ${DB_NAME}
     ports:
       - 27017:27017
+    env_file:
+      - ./webcraft-api/.env
+  mongo-seed:
+    build:
+      dockerfile: .dockerfile
+      context: .
+    environment:
+      HOST: mongo
+      DB: ${DB_NAME}
+      COLLECTION: test
+      FILE_PATH: ./db/itemsList.json
+    depends_on:
+      - mongo
 volumes:
   mongodb-data:

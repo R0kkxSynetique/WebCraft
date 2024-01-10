@@ -129,3 +129,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+webcraft-api/__pycache__/
+
+webcraft-api/service/__pycache__/
