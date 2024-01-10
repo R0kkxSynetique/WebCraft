@@ -2,8 +2,6 @@ import os
 
 from pymongo import MongoClient
 
-from bson.json_util import dumps
-
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 class Mongo:
@@ -32,3 +30,10 @@ class Mongo:
         recipe = coll.find_one({str(id): {"$type":3}}, {'_id': 0})
         recipe = jsonable_encoder(recipe)
         return JSONResponse(content=recipe)
+    
+    def getUserInventories(self, userId):
+        coll = self.__db["inventories"]
+        inventories = coll.find({}, {'_id': 0})
+        inventories = list(inventories)
+        res = jsonable_encoder(inventories)
+        return JSONResponse(content=res)
