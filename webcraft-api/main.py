@@ -49,7 +49,3 @@ async def route(inventory_id, inventory: Inventory):
 @app.delete("/inventory/{inventory_id}")
 async def route(inventory_id):
     return deleteInventory(inventory_id, db)
-
-@app.delete("/item/{item_id}/{inventory_id}/{amount}")
-async def route(item_id, inventory_id, amount):
-    return deleteItem(item_id, inventory_id, amount, db)
