@@ -41,8 +41,8 @@ async def route(user_id, inventory: Inventory):
     return createInventory(user_id, inventory.name, inventory.date, db)
 
 @app.patch("/inventory/{inventory_id}")
-async def route(inventory_id, name: str):
-    return updateInventory(inventory_id, name, db)
+async def route(inventory_id, inventory: Inventory):
+    return updateInventory(inventory_id, inventory.name, inventory.date, db)
 
 @app.delete("/inventory/{inventory_id}")
 async def route(inventory_id):

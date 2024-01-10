@@ -54,3 +54,8 @@ class Mongo:
         res = coll.insert_one(inventory)
         return JSONResponse(content={"message": "createInventory"})
 
+    def updateInventory(self, inventory_id, name, date):
+        coll = self.__db["inventories"]
+        obj_id = ObjectId(inventory_id)
+        coll.update_one({"_id": obj_id}, {"$set": {"name": name, "date": date}})
+        return JSONResponse(content={"message": "updateInventory"})
