@@ -6,6 +6,9 @@ from service.item import *
 from service.recipe import *
 from service.inventory import *
 from mongo import *
+
+from models.Save import Save
+
 load_dotenv(find_dotenv())
 
 app = FastAPI()
@@ -19,8 +22,8 @@ async def route(inventory_id):
     return getSave(inventory_id)
 
 @app.post("/save/{inventory_id}")
-async def route(inventory_id, inventory: str):
-    return postSave(inventory_id, inventory)
+async def create_save(save: Save):
+    return postSave(save.inventory_id, save.items)
 
 @app.get("/item/random")
 async def route():
