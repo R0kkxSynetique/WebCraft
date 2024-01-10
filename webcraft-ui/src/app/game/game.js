@@ -242,6 +242,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
                     currentlyDraggedStack.view.parentNode.innerHTML = ""
                     currentlyDraggedStack = null
                 }
+                saveState()
             }
         })
 
@@ -299,6 +300,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
 
             } else if (currentlyDraggedStack && boxId == 1002) {
                 // move to trash 
+
                 logicalStacks = logicalStacks.filter(function (stack) {
                     return stack.stackId !== currentlyDraggedStack.instance.stackId
                 })
@@ -307,10 +309,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
                 currentlyDraggedStack = null
                 holderBox.innerHTML = ''
 
-
-                if (boxId > 0 && boxId < 10) {
-                    getCraftResult()
-                }
+                saveState()
             }
         };
     }
@@ -343,7 +342,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
     const generate = async () => {
 
         let getNewStack = await generateItem()
-        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1002, getNewStack.name)
+        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, getNewStack.name)
         generatingBox.appendChild(newStack.view())
 
 
