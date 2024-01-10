@@ -1,7 +1,7 @@
 from mongo import *
 
 def getAllInventory(user_id, db: Mongo):
-    return db.getInventoriesByUserId(user_id)
+    return db.getUserInventories(user_id)
 
 def createInventory(user_id, name: str, db: Mongo):
     return {"message": "createInventory"}
