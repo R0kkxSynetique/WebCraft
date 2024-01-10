@@ -1,6 +1,6 @@
 import Stack from './Stack.js';
 import { getCraft, generateItem } from '@/services/stack.js';
-import {save} from '@/services/saves.js';
+import { save } from '@/services/saves.js';
 import { useEffect } from 'react';
 
 const GameScript = (setIsCraftLoading, initialItems) => {
@@ -342,10 +342,10 @@ const GameScript = (setIsCraftLoading, initialItems) => {
     const generate = async () => {
 
         let getNewStack = await generateItem()
+
         let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, getNewStack.name)
+
         generatingBox.appendChild(newStack.view())
-
-
         listenItem(generatingBox.firstChild, newStack)
         logicalStacks.push(newStack)
     }
@@ -375,12 +375,17 @@ const GameScript = (setIsCraftLoading, initialItems) => {
         });
 
         let getNewStack = await getCraft(ingredients)
-        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1001, getNewStack.name)
-        craftingBox.appendChild(newStack.view())
 
+        console.log(getNewStack)
 
-        listenItem(craftingBox.firstChild, newStack)
-        logicalStacks.push(newStack)
+        if (Object.keys(getNewStack).length !== 0) {
+            console.log("asdasd")
+            let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1001, getNewStack.name)
+            craftingBox.appendChild(newStack.view())
+            listenItem(craftingBox.firstChild, newStack)
+            logicalStacks.push(newStack)
+        }
+
         setIsCraftLoading(false)
     }
 
