@@ -1,26 +1,14 @@
 import Stack from './Stack.js';
 import { getCraft, generateItem } from '@/services/stack.js';
+import { useEffect } from 'react';
 
 const GameScript = (setIsCraftLoading) => {
+
 
     // Array of all Stacks
     let logicalStacks = []
 
-    // itemsCount, itemId, location, name, stackidIncrement
-    let id = 0
-    let fish3 = new Stack(32, 1, 4, "Pufferfish", id)
-    id--
-    let fish4 = new Stack(63, 3, 2, "dragon-egg", id)
-    id--
-    let fish5 = new Stack(50, 2, 3, "oak_planks", id)
 
-
-    logicalStacks.push(fish3, fish4, fish5)
-
-    // spawn all stacks on board
-    logicalStacks.forEach(stack => {
-        document.getElementById(`box-${stack.location}`).appendChild(stack.view())
-    });
 
     // check if box is already in a stack location
     function checkBoxAvailability(boxId) {
@@ -396,12 +384,40 @@ const GameScript = (setIsCraftLoading) => {
         setIsCraftLoading(false)
     }
 
-    // Check if there is a result to the initial craft
-    getCraftResult()
-
     const saveState = () => {
         console.log("save")
     }
+
+
+
+
+
+    // Check if there is a result to the initial craft
+    getCraftResult()
+
+    // itemsCount, itemId, location, name, stackidIncrement
+    let id = 0
+    let fish3 = new Stack(32, 1, 4, "Pufferfish", id)
+    id--
+    let fish4 = new Stack(63, 3, 2, "dragon-egg", id)
+    id--
+    let fish5 = new Stack(50, 2, 3, "oak_planks", id)
+
+
+    logicalStacks.push(fish3, fish4, fish5)
+
+    // spawn all stacks on board
+    logicalStacks.forEach(stack => {
+        document.getElementById(`box-${stack.location}`).appendChild(stack.view())
+    });
+
+    stacks = document.getElementsByClassName('item');
+    const stackArray = Array.from(stacks);
+
+    stackArray.forEach(stack => {
+        listenItem(stack);
+    });
+
 }
 
 export default GameScript

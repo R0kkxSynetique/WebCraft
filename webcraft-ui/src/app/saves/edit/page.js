@@ -12,7 +12,7 @@ const rename = () => {
 
     return (
         <div className="home">
-            <span className='page-title'>Create Save</span>
+            <span className='page-title'>Rename Save</span>
             <form>
                 <div>
                     <label htmlFor="rename">Save Name</label>
