@@ -6,6 +6,7 @@ from service.item import *
 from service.recipe import *
 from service.inventory import *
 from mongo import *
+from models.inventory import *
 load_dotenv(find_dotenv())
 
 app = FastAPI()
@@ -36,8 +37,8 @@ async def route(user_id):
     return getAllInventory(user_id, db)
 
 @app.post("/inventory/{user_id}/create")
-async def route(user_id, name: str):
-    return createInventory(user_id, name, db)
+async def route(user_id, inventory: Inventory):
+    return createInventory(user_id, inventory.name, inventory.date, db)
 
 @app.patch("/inventory/{inventory_id}")
 async def route(inventory_id, name: str):

@@ -47,4 +47,10 @@ class Mongo:
         save = coll.find_one({"_id": obj_id}, {'_id': 0})
         save = jsonable_encoder(save)
         return JSONResponse(content=save)
+    
+    def createInventory(self, userId, name, date):
+        coll = self.__db["inventories"]
+        inventory = {"owner_id": userId, "name": name, "date": date, "items": []}
+        res = coll.insert_one(inventory)
+        return JSONResponse(content={"message": "createInventory"})
 
