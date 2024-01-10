@@ -7,6 +7,9 @@ from bson.objectid import ObjectId
 
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+
+from bson.objectid import ObjectId
+
 class Mongo:
     def __init__(self):
         self.__db = self.__get_database()
@@ -40,6 +43,11 @@ class Mongo:
         inventories = list(inventories)
         res = jsonable_encoder(inventories)
         return JSONResponse(content=res)
+    
+    def saveInventory(self, inventoryId, items):
+        coll = self.__db["inventories"]
+        res = coll.update_one({"_id": ObjectId(inventoryId)}, {"$set": {"items": items}})
+        return JSONResponse(content=res.raw_result)
 
     def getSaveById(self, id):
         coll = self.__db["inventories"]

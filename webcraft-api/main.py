@@ -6,6 +6,8 @@ from service.item import *
 from service.recipe import *
 from service.inventory import *
 from mongo import *
+
+from models.Save import Save
 from models.inventory import *
 load_dotenv(find_dotenv())
 
@@ -21,8 +23,8 @@ async def route(inventory_id):
     return getSave(inventory_id, db)
 
 @app.post("/save/{inventory_id}")
-async def route(inventory_id, inventory: str):
-    return postSave(inventory_id, inventory, db)
+async def create_save(save: Save):
+    return postSave(save.inventory_id, save.items)
 
 @app.get("/item/random")
 async def route():
