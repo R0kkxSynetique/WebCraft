@@ -14,15 +14,21 @@ class Mongo:
     def __get_database(self):
         CONNECTION_STRING = os.getenv("MONGO_CONNECTION_STRING")
         client = MongoClient(CONNECTION_STRING)
-        return client[os.getenv("DATABASE")]
+        return client[os.getenv("DB_NAME")]
 
     def getItemById(self, id):
         coll = self.__db["items"]
-        x = coll.find_one({"id": id}, {'_id': 0})
-        x = jsonable_encoder(x)
-        return JSONResponse(content=x)
+        item = coll.find_one({"id": id}, {'_id': 0})
+        item = jsonable_encoder(item)
+        return JSONResponse(content=item)
     
     def getRandomItem(self):
         coll = self.__db["items"]
         random_item = coll.aggregate([{ '$sample': { 'size': 1 } },{'$project':{'_id':0}}]).next()
         return JSONResponse(content=random_item)
+    
+    def getRecipeById(self, id):
+        coll = self.__db["recipes"]
+        recipe = coll.find_one({str(id): {"$type":3}}, {'_id': 0})
+        recipe = jsonable_encoder(recipe)
+        return JSONResponse(content=recipe)

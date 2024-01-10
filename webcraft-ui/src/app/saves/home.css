@@ -1,0 +1,49 @@
+.home {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.saves {
+  width: 100%;
+  min-height: 258px;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+
+  /* top and bottom inner shadow */
+  box-shadow: inset 0 15px 1rem -10px black, inset 0 -15px 1rem -10px black;
+}
+
+.save {
+  width: 50%;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.save-selected {
+  outline: 4px solid var(--grey);
+}
+
+.save .title {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.save .last-played {
+  color: var(--grey);
+}
+
+.buttons {
+  padding-top: 4rem;
+  width: 75%;
+  display: grid;
+  grid-template: auto auto / auto auto;
+  grid-gap: 1rem 2rem;
+}
