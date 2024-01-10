@@ -70,3 +70,14 @@ class Mongo:
                 if "inShape" in value and value["inShape"] == ingredients:
                     return document
         return None
+    def updateInventory(self, inventory_id, name, date):
+        coll = self.__db["inventories"]
+        obj_id = ObjectId(inventory_id)
+        coll.update_one({"_id": obj_id}, {"$set": {"name": name, "date": date}})
+        return JSONResponse(content={"message": "updateInventory"})
+
+    def deleteInventory(self, inventory_id):
+        coll = self.__db["inventories"]
+        obj_id = ObjectId(inventory_id)
+        coll.delete_one({"_id": obj_id})
+        return JSONResponse(content={"message": "deleteInventory"})
