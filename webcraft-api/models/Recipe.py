@@ -1,21 +1,14 @@
 from pydantic import BaseModel
 
-from fastapi.encoders import jsonable_encoder
-
 from itertools import permutations
 
 from mongo import mongo
 
 
 class Recipe(BaseModel):
-    def getRecipeById(self, id):
-        coll = mongo.__db["recipes"]
-        recipe = coll.find_one({str(id): {"$type": 3}}, {"_id": 0})
-        return jsonable_encoder(recipe)
-
-    def getRecipeResultByIngredientsId(self, ingredients):
+    def getRecipeResultByIngredientsId(ingredients):
         is_not_nested = False
-        coll = mongo.__db["recipes"]
+        coll = mongo.db["recipes"]
         cursor = coll.find({}, {"_id": 0})
         res = {}
         if not any(isinstance(i, list) for i in ingredients):

@@ -41,20 +41,12 @@ async def rename_save(save_id, save: SaveModel):
 async def get_random_item():
     return Item.getRandomItem()
 
+
 @app.put("/inventory/{inventory_id}/save")
 async def save_inventory(inventory_id, inventory: InventoryModel):
     return Inventory.saveInventory(inventory_id, inventory.items)
 
-# @app.post("/recipe")
-# async def create_Recipe(craftingTable: CraftingTableModel):
-#     return Recipe.getRecipe(craftingTable.ingredients)
 
-
-# @app.patch("/inventory/{inventory_id}")
-# async def update_inventory(inventory_id, inventory: InventoryModel):
-#     return Inventory.update(inventory_id, inventory.name, inventory.date)
-
-
-# @app.delete("/inventory/{inventory_id}")
-# async def delete_inventory(inventory_id):
-#     return Inventory.delete(inventory_id)
+@app.post("/recipe/result")
+async def get_recipe_result_from_crafting_table(craftingTable: CraftingTableModel):
+    return Recipe.getRecipeResult(craftingTable.ingredients)
