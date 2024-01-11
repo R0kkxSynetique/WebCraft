@@ -1,13 +1,19 @@
-from mongo import *
+from models.Inventory import Inventory as InventoryModel
 
-def getAllInventory(user_id, db: Mongo):
-    return db.getUserInventories(user_id)
 
-def createInventory(user_id, name: str,date: str, db: Mongo):
-    return db.createInventory(user_id, name, date)
+class Inventory:
+    @staticmethod
+    def getInventory(user_id, inventory_id):
+        return InventoryModel.getInventory(user_id, inventory_id)
+    
+    @staticmethod
+    def createInventory(user_id, name: str, date: str):
+        return InventoryModel.createInventory(user_id, name, date)
 
-def updateInventory(inventory_id, name: str, date: str, db: Mongo):
-    return db.updateInventory(inventory_id, name, date)
+    @staticmethod
+    def update(inventory_id, name: str, date: str):
+        return InventoryModel.updateInventory(inventory_id, name, date)
 
-def deleteInventory(inventory_id, db: Mongo):
-    return db.deleteInventory(inventory_id)
+    @staticmethod
+    def delete(inventory_id):
+        return InventoryModel.deleteInventory(inventory_id)

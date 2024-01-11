@@ -1,5 +1,6 @@
-from mongo import *
+from models.Recipe import Recipe as RecipeModel
 
-def getRecipe(ingredients):
-    db = Mongo()
-    return db.getRecipesByIngredientsId(ingredients)
+class Recipe:
+    @staticmethod
+    def getRecipe(ingredients):
+        return RecipeModel.getRecipesByIngredientsId(ingredients)
