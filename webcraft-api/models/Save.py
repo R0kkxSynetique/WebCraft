@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 class Save(BaseModel):
-    inventory_id: str
+    save_id: str
     items: list
