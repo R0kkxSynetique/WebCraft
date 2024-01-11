@@ -376,10 +376,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
 
         let getNewStack = await getCraft(ingredients)
 
-        console.log(getNewStack)
-
         if (Object.keys(getNewStack).length !== 0) {
-            console.log("asdasd")
             let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1001, getNewStack.name)
             craftingBox.appendChild(newStack.view())
             listenItem(craftingBox.firstChild, newStack)

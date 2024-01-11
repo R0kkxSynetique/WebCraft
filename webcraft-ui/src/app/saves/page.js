@@ -25,7 +25,7 @@ export default function Home() {
     }
 
     const log = () => {
-        let rand = Math.round(Math.random()* (10000000 - 1000000) + 1000000)
+        let rand = Math.round(Math.random() * (10000000 - 1000000) + 1000000)
         let timestamp = new Date().getTime()
 
         localStorage.setItem("user-id", rand.toString() + timestamp.toString());
@@ -33,7 +33,8 @@ export default function Home() {
 
     const fetchData = async () => {
         try {
-            setSaves(await getSaves())
+            let saves = await getSaves()
+            setSaves(saves.sort((a, b) => b.date - a.date))
             setAreSavesLoading(false);
         } catch (error) {
             // Handle errors here
@@ -47,9 +48,29 @@ export default function Home() {
         }
 
         fetchData();
-
     }, []);
 
+
+    const formatDate = (timestamp) => {
+
+        let date = new Date(timestamp)
+
+        let day = date.getDate()
+        let month = date.getMonth() + 1
+        let year = date.getFullYear()
+        let hours = date.getHours()
+        let minutes = date.getMinutes()
+
+        // Pad the day and month with a 0 if they are single digits
+        day = day < 10 ? '0' + day : day
+        month = month < 10 ? '0' + month : month
+
+        // Pad the hours and minutes with a 0 if they are single digits
+        hours = hours < 10 ? '0' + hours : hours
+        minutes = minutes < 10 ? '0' + minutes : minutes
+
+        return `${day}.${month}.${year} : ${hours}:${minutes}`
+    }
 
     return (
         <section className='home'>
@@ -75,7 +96,7 @@ export default function Home() {
                                 // onBlur={() => setSelectedSave(false)}
                                 >
                                     <h1 className='title'>{save.title}</h1>
-                                    <span className='last-played'>Last Played ({save.lastPlayed})</span>
+                                    <span className='last-played'>Last Played ({formatDate(save.date)})</span>
                                 </div>
                             );
                         })

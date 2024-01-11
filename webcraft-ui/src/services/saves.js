@@ -31,7 +31,7 @@ export const save = async (logicalStacks) => {
 
     const data = await fetch("http://localhost:5000/save", {
         method: 'POST',
-        headers: new Headers({'Content-Type': 'application/json'}),
+        headers: new Headers({ 'Content-Type': 'application/json' }),
         body: save
     })
 
@@ -45,6 +45,23 @@ export const getInventory = async () => {
     const data = await fetch(`http://localhost:5000/inventory/${inventory_id}`, {
         method: 'GET',
         headers: new Headers({ 'Content-Type': 'application/json' }),
+    })
+
+    return await data.json();
+}
+
+export const createSave = async (name) => {
+    
+    let save = {
+        // "owner_id": localStorage.getItem("user-id"),
+        "name": name,
+        "date": new Date().getTime()
+    }
+
+    const data = await fetch("http://localhost:5000/saves/create", {
+        method: 'POST',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        body: save
     })
 
     return await data.json();
