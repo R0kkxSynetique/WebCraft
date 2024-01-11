@@ -12,17 +12,14 @@ services:
       MONGO_INITDB_DATABASE: ${DB_NAME}
     ports:
       - 27017:27017
-    env_file:
-      - ./webcraft-api/.env
   mongo-seed:
     build:
       dockerfile: .dockerfile
       context: .
     environment:
-      HOST: mongo
-      DB: ${DB_NAME}
-      COLLECTION: test
-      FILE_PATH: ./db/itemsList.json
+      CONNECTION_STRING: "mongodb://${DB_ROOT_USER}:${DB_ROOT_PASS}@mongo:27017/${DB_NAME}?authSource=admin"
+      COLLECTION: items
+      FILE_PATH: ./db/items.json
     depends_on:
       - mongo
 volumes:
