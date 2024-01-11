@@ -40,8 +40,12 @@ class Mongo:
     
     def getUserInventories(self, userId):
         coll = self.__db["inventories"]
-        inventories = coll.find({}, {'_id': 0})
+        inventories = coll.find({"owner_id": userId}, {'_id': 1, 'name': 1, 'date': 1})
         inventories = list(inventories)
+        for inventory in inventories:
+            inventory["id"] = str(inventory["_id"]).replace("ObjectId(", '').replace(")", '')
+            inventory.pop("_id")
+        print(inventories)
         res = jsonable_encoder(inventories)
         return res
     
