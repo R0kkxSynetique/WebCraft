@@ -1,19 +1,3 @@
-// export const getSaves = async () => {
-
-//     let userId = localStorage.getItem("user-id")
-
-
-//     const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${userId}`, {
-//         method: 'GET',
-//         headers: new Headers({ 'Content-Type': 'application/json' }),
-//     })
-
-//     console.log(await data.json())
-
-//     return await data.json();
-// }
-
-
 export const getSaves = async () => {
 
     let userId = localStorage.getItem("user-id")
@@ -45,7 +29,6 @@ export const save = async (logicalStacks) => {
 
     let items = []
 
-
     logicalStacks.forEach(stack => {
         items.push({
             "id": stack.itemId,
@@ -71,11 +54,12 @@ export const save = async (logicalStacks) => {
     return await data.json();
 }
 
+
 export const getInventory = async () => {
 
     let inventory_id = new URLSearchParams(window.location.search).get("save")
 
-    const data = await fetch(`http://localhost:5000/inventory/${inventory_id}`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/${inventory_id}`, {
         method: 'GET',
         headers: new Headers({ 'Content-Type': 'application/json' }),
     })
