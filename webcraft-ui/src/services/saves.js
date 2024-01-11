@@ -1,17 +1,41 @@
+// export const getSaves = async () => {
+
+//     let userId = localStorage.getItem("user-id")
+
+
+//     const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${userId}`, {
+//         method: 'GET',
+//         headers: new Headers({ 'Content-Type': 'application/json' }),
+//     })
+
+//     console.log(await data.json())
+
+//     return await data.json();
+// }
+
+
 export const getSaves = async () => {
 
     let userId = localStorage.getItem("user-id")
 
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${userId}`, {
+            method: 'GET',
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+        })
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${userId}`, {
-        method: 'GET',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-    })
-
-    console.log(await data.json())
-
-    return await data.json();
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching saves:', error);
+    }
 }
+
+
+
 
 export const save = async (logicalStacks) => {
 

@@ -33,11 +33,12 @@ export default function Home() {
 
     const fetchData = async () => {
         try {
-            let saves = await getSaves()
-            setSaves(saves.sort((a, b) => b.date - a.date))
+            let tmpSaves = await getSaves()
+
+            setSaves(tmpSaves.sort((a, b) => b.date - a.date))
             setAreSavesLoading(false);
         } catch (error) {
-            // Handle errors here
+            // Handle errors
             console.error('Error fetching saves:', error);
         }
     };
@@ -53,7 +54,7 @@ export default function Home() {
 
     const formatDate = (timestamp) => {
 
-        let date = new Date(timestamp)
+        let date = new Date(parseInt(timestamp))
 
         let day = date.getDate()
         let month = date.getMonth() + 1
@@ -82,20 +83,17 @@ export default function Home() {
                         <LoadingSaves />
                     ) : (
                         saves.map((save) => {
-                            saveRefs.current[save.title] = React.createRef();
+                            saveRefs.current[save.name] = React.createRef();
                             return (
                                 <div
-                                    key={save.title}
-                                    ref={saveRefs.current[save.title]}
+                                    key={save.name}
+                                    ref={saveRefs.current[save.name]}
                                     className={selectedSave == save.id ? "save save-selected" : "save"}
                                     tabIndex="0"
-                                    onFocus={() => {
-                                        setSelectedSave(save.id);
-                                    }}
-                                    onClick={() => handleClick(save.title)}
+                                    onClick={() => {handleClick(save.name); setSelectedSave(save.id)}}
                                 // onBlur={() => setSelectedSave(false)}
                                 >
-                                    <h1 className='title'>{save.title}</h1>
+                                    <h1 className='title'>{save.name}</h1>
                                     <span className='last-played'>Last Played ({formatDate(save.date)})</span>
                                 </div>
                             );
