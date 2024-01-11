@@ -1,17 +1,20 @@
-from mongo import *
-from fastapi import FastAPI, HTTPException
+from models.Save import Save as SaveModel
+from models.Inventory import Inventory as InventoryModel
 
+class Save:
 
-def getSave(inventory_id: str, db: Mongo):
-    print(inventory_id)
-    save = db.getSaveById(inventory_id)
-    if not save:
-        raise HTTPException(status_code=404, detail="Save not found")
-    return JSONResponse(content=save)
+    @staticmethod
+    def postSave(inventory_id, inventory):
+        return InventoryModel.saveInventory(inventory_id, inventory)
 
-def postSave(inventory_id, inventory):
-    db = Mongo()
-    save = db.saveInventory(inventory_id, inventory)
-    if not save:
-        raise HTTPException(status_code=404, detail="Save not found")
-    return JSONResponse(content=save)
+    @staticmethod
+    def getUserSaves(user_id):
+        return SaveModel.getUserSavesWithoutItems(user_id)
+    
+    @staticmethod
+    def deleteSave(save_id):
+        return SaveModel.deleteSave(save_id)
+    
+    @staticmethod
+    def renameSave(save_id, name):
+        return SaveModel.renameSave(save_id, name)
