@@ -19,7 +19,7 @@ db = Mongo()
 
 @app.get("/")
 async def route():
-    return getRecipe([[None, None, None], [302, None, None], [None, 302, None]])
+    return getRecipe([[None, 40, 39], [281, None, None], [None, None, None]])
 
 @app.get("/save/{inventory_id}")
 async def route(inventory_id):

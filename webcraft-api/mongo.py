@@ -72,7 +72,7 @@ class Mongo:
                     res = document[key]["result"]
                 elif "ingredients" in value and value["ingredients"] == ingredients:
                     res = document[key]["result"]
-        return JSONResponse(content=res)
+        return res
     
     def updateInventory(self, inventory_id, name, date):
         coll = self.__db["inventories"]

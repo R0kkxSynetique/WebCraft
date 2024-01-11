@@ -121,13 +121,12 @@ def getRecipe(ingredients):
     print(ingredients)
 
     #check ingredients craft
-    recipes = db.getRecipesByIngredientsId(ingredients_id)
-
-    if recipes == None:
-        return db.getRecipesByIngredientsId(ingredients)
+    recipe = db.getRecipeResultByIngredientsId(ingredients_id)
+    print(recipe)
+    if not recipe:
+        return JSONResponse(db.getRecipeResultByIngredientsId(ingredients))
     else:
-        return recipes
-
+        return JSONResponse(recipe)
     
              
                  
