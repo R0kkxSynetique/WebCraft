@@ -25,6 +25,10 @@ export const getSaves = async () => {
         })
 
         if (!response.ok) {
+            if(response.status === 404) {
+                return []
+            }
+
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
