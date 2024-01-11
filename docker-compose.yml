@@ -12,8 +12,6 @@ services:
       MONGO_INITDB_DATABASE: ${DB_NAME}
     ports:
       - 27017:27017
-    env_file:
-      - ./webcraft-api/.env
   mongo-seed:
     build:
       dockerfile: .dockerfile
