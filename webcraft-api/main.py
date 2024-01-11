@@ -6,6 +6,7 @@ from service.inventory import Inventory
 
 from models.CraftingTable import CraftingTable as CraftingTableModel
 from models.Inventory import Inventory as InventoryModel
+from models.Save import Save as SaveModel
 
 
 app = FastAPI()
@@ -29,6 +30,11 @@ async def create_inventory(inventory: InventoryModel):
 @app.delete("/save/{save_id}")
 async def delete_save(save_id):
     return Save.deleteSave(save_id)
+
+
+@app.put("/save/{save_id}/rename")
+async def rename_save(save_id, save: SaveModel):
+    return Save.renameSave(save_id, save.name)
 
 
 @app.get("/item/random")

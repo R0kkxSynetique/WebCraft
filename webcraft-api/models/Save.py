@@ -6,8 +6,9 @@ from mongo import mongo
 
 
 class Save(BaseModel):
-    save_id: str
-    items: list
+    save_id: str | None = None
+    name: str | None = None
+    items: list | None = None
 
     def getUserSavesWithoutItems(userId):
         coll = mongo.db["inventories"]
@@ -25,3 +26,9 @@ class Save(BaseModel):
         obj_id = ObjectId(saveId)
         res = coll.delete_one({"_id": obj_id})
         return res.deleted_count
+
+    def renameSave(saveId, name):
+        coll = mongo.db["inventories"]
+        obj_id = ObjectId(saveId)
+        res = coll.update_one({"_id": obj_id}, {"$set": {"name": name}})
+        return res.modified_count

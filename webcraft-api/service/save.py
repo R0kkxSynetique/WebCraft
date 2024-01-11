@@ -14,3 +14,7 @@ class Save:
     @staticmethod
     def deleteSave(save_id):
         return SaveModel.deleteSave(save_id)
+    
+    @staticmethod
+    def renameSave(save_id, name):
+        return SaveModel.renameSave(save_id, name)
