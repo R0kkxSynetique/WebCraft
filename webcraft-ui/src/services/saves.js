@@ -51,7 +51,8 @@ export const getInventory = async () => {
 }
 
 export const createSave = async (name) => {
-    
+
+
     let save = {
         // "owner_id": localStorage.getItem("user-id"),
         "name": name,
@@ -62,6 +63,31 @@ export const createSave = async (name) => {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: save
+    })
+
+    return await data.json();
+}
+
+export const renameSave = async (name) => {
+
+    let saveId = new URLSearchParams(window.location.search).get("save")
+
+    const data = await fetch(`http://localhost:5000/saves/${saveId}/rename`, {
+        method: 'POST',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        body: { "name": name }
+    })
+
+    return await data.json();
+}
+
+export const deleteSave = async (saves, setSaves, saveRemovable) => {
+
+    setSaves(saves.filter(save => save.id !== saveRemovable))
+
+    const data = await fetch(`http://localhost:5000/saves/${saveRemovable}/remove`, {
+        method: 'DELETE',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
     })
 
     return await data.json();

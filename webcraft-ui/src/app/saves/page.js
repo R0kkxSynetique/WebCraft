@@ -4,7 +4,7 @@
 import React, { useRef, useEffect, useState, Suspense } from 'react';
 import './home.css';
 import Loading, { LoadingSaves } from './loading';
-import { getSaves } from '@/services/saves';
+import { getSaves, deleteSave } from '@/services/saves';
 import { useRouter } from 'next/navigation'
 
 
@@ -110,7 +110,7 @@ export default function Home() {
                 </button>
                 <button id='create' disabled={areSavesLoading || saves.length >= 3} onClick={() => router.push(`/saves/create`)}>Create a New Save</button>
                 <button id='rename' disabled={!selectedSave} onClick={() => router.push(`/saves/edit?save=${selectedSave}`)}>Rename Selected Save</button>
-                <button id='delete' disabled={!selectedSave}>Delete Selected Save</button>
+                <button id='delete' disabled={!selectedSave} onClick={() => {deleteSave(saves, setSaves, selectedSave); setSelectedSave(null)}}>Delete Selected Save</button>
             </div>
         </section>
     );
