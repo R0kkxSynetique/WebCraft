@@ -7,6 +7,7 @@ from service.recipe import *
 from service.inventory import *
 from mongo import *
 
+
 from models.Save import Save
 from models.inventory import *
 from models.CraftingTable import CraftingTable
@@ -18,7 +19,7 @@ db = Mongo()
 
 @app.get("/")
 async def route():
-    return {"message": "Welcome to Webcraft API!"}
+    return getRecipe([[264, 264, None], [None, 280, None], [None, 280, None]])
 
 @app.get("/save/{inventory_id}")
 async def route(inventory_id):

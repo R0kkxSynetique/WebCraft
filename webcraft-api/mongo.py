@@ -27,47 +27,47 @@ class Mongo:
         coll = self.__db["items"]
         item = coll.find_one({"id": id}, {"_id": 0})
         item = jsonable_encoder(item)
-        return JSONResponse(content=item)
-
+        return item
+    
     def getRandomItem(self):
         coll = self.__db["items"]
-        random_item = coll.aggregate(
-            [{"$sample": {"size": 1}}, {"$project": {"_id": 0}}]
-        ).next()
-        return JSONResponse(content=random_item)
-
+        random_item = coll.aggregate([{ '$sample': { 'size': 1 } },{'$project':{'_id':0}}]).next()
+        return random_item
+    
     def getRecipeById(self, id):
         coll = self.__db["recipes"]
         recipe = coll.find_one({str(id): {"$type": 3}}, {"_id": 0})
         recipe = jsonable_encoder(recipe)
-        return JSONResponse(content=recipe)
-
+        return recipe
+    
     def getUserInventories(self, userId):
         coll = self.__db["inventories"]
-        inventories = coll.find({}, {"_id": 1, "items": 0})
+        inventories = coll.find({"owner_id": userId}, {'_id': 1, 'name': 1, 'date': 1})
         inventories = list(inventories)
+        for inventory in inventories:
+            inventory["id"] = str(inventory["_id"]).replace("ObjectId(", '').replace(")", '')
+            inventory.pop("_id")
+        print(inventories)
         res = jsonable_encoder(inventories)
-        return JSONResponse(content=res)
-
+        return res
+    
     def saveInventory(self, inventoryId, items):
         coll = self.__db["inventories"]
-        res = coll.update_one(
-            {"_id": ObjectId(inventoryId)}, {"$set": {"items": items}}
-        )
-        return JSONResponse(content=res.raw_result)
+        res = coll.update_one({"_id": ObjectId(inventoryId)}, {"$set": {"items": items}})
+        return res.raw_result
 
     def getSaveById(self, id):
         coll = self.__db["inventories"]
         obj_id = ObjectId(id)
         save = coll.find_one({"_id": obj_id}, {"_id": 0})
         save = jsonable_encoder(save)
-        return JSONResponse(content=save)
-
+        return save
+    
     def createInventory(self, userId, name, date):
         coll = self.__db["inventories"]
         inventory = {"owner_id": userId, "name": name, "date": date, "items": []}
         res = coll.insert_one(inventory)
-        return JSONResponse(content={"message": "createInventory"})
+        return {"message": "createInventory"}
 
     def getRecipeResultByIngredientsId(self, ingredients):
         is_not_nested = False
@@ -86,16 +86,15 @@ class Mongo:
                     and tuple(value["ingredients"]) in all_permutations
                 ):
                     res = document[key]["result"]
-        return JSONResponse(content=res)
-
+        return res
     def updateInventory(self, inventory_id, name, date):
         coll = self.__db["inventories"]
         obj_id = ObjectId(inventory_id)
         coll.update_one({"_id": obj_id}, {"$set": {"name": name, "date": date}})
-        return JSONResponse(content={"message": "updateInventory"})
+        return {"message": "updateInventory"}
 
     def deleteInventory(self, inventory_id):
         coll = self.__db["inventories"]
         obj_id = ObjectId(inventory_id)
         coll.delete_one({"_id": obj_id})
-        return JSONResponse(content={"message": "deleteInventory"})
+        return {"message": "deleteInventory"}
