@@ -17,7 +17,7 @@ export const getCraft = async (ingredients) => {
         formattedIngredients[stack.location] = stack.itemId
     });
 
-    const data = await fetch("http://localhost:5000/reciepe", {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/reciepe`, {
         method: 'POST',
         headers: new Headers({'Content-Type': 'application/json'}),
         body: formattedIngredients
@@ -27,7 +27,7 @@ export const getCraft = async (ingredients) => {
 }
 
 export const generateItem = async ()=> {
-    const data = await fetch("http://localhost:5000/generate", {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/generate`, {
         method: 'GET',
         headers: new Headers({'Content-Type': 'application/json'}),
     })

@@ -1,6 +1,6 @@
 export const getSaves = async (userId) => {
 
-    const data = await fetch("http://localhost:5000/saves", {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/saves`, {
         method: 'GET',
         headers: new Headers({ 'Content-Type': 'application/json' }),
     })
@@ -29,7 +29,7 @@ export const save = async (logicalStacks) => {
         "items": items
     }
 
-    const data = await fetch("http://localhost:5000/save", {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save`, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: save
@@ -42,7 +42,7 @@ export const getInventory = async () => {
 
     let inventory_id = new URLSearchParams(window.location.search).get("save")
 
-    const data = await fetch(`http://localhost:5000/inventory/${inventory_id}`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${inventory_id}`, {
         method: 'GET',
         headers: new Headers({ 'Content-Type': 'application/json' }),
     })
@@ -59,7 +59,7 @@ export const createSave = async (name) => {
         "date": new Date().getTime()
     }
 
-    const data = await fetch("http://localhost:5000/saves/create", {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/saves/create`, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: save
@@ -72,7 +72,7 @@ export const renameSave = async (name) => {
 
     let saveId = new URLSearchParams(window.location.search).get("save")
 
-    const data = await fetch(`http://localhost:5000/saves/${saveId}/rename`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/saves/${saveId}/rename`, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: { "name": name }
@@ -85,7 +85,7 @@ export const deleteSave = async (saves, setSaves, saveRemovable) => {
 
     setSaves(saves.filter(save => save.id !== saveRemovable))
 
-    const data = await fetch(`http://localhost:5000/saves/${saveRemovable}/remove`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/saves/${saveRemovable}/remove`, {
         method: 'DELETE',
         headers: new Headers({ 'Content-Type': 'application/json' }),
     })
