@@ -7,8 +7,8 @@ from mongo import mongo
 
 class Inventory(BaseModel):
     owner_id: str | None = None
-    name: str
-    date: str
+    name: str | None = None
+    date: str | None = None
     items: list | None = None
 
     def saveInventory(inventoryId, items):

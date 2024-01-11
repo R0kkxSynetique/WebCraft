@@ -11,9 +11,9 @@ class Inventory:
         return InventoryModel.createInventory(user_id, name, date)
 
     @staticmethod
-    def update(inventory_id, name: str, date: str):
-        return InventoryModel.updateInventory(inventory_id, name, date)
-
+    def saveInventory(inventory_id, items):
+        return InventoryModel.saveInventory(inventory_id, items)
+    
     @staticmethod
     def delete(inventory_id):
         return InventoryModel.deleteInventory(inventory_id)
