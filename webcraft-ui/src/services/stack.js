@@ -20,7 +20,7 @@ export const getCraft = async (ingredients) => {
     const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/reciepe`, {
         method: 'POST',
         headers: new Headers({'Content-Type': 'application/json'}),
-        body: formattedIngredients
+        body: JSON.stringify(formattedIngredients)
     })
 
     return await data.json();

@@ -37,7 +37,7 @@ export const save = async (logicalStacks) => {
     const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save`, {
         method: 'PUT',
         headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: save
+        body: JSON.stringify(save)
     })
 
     return await data.json();
@@ -60,7 +60,6 @@ export const createSave = async (name) => {
     let userId = localStorage.getItem("user-id")
 
     let save = {
-        // "owner_id": localStorage.getItem("user-id"),
         "name": name.toString(),
         "date": new Date().getTime().toString()
     }
@@ -83,7 +82,7 @@ export const renameSave = async (name) => {
     const data = await fetch(`http://localhost:5000/saves/${saveId}/rename`, {
         method: 'PUT',
         headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: { "name": name }
+        body: JSON.stringify({"name": name })
     })
 
     return await data.json();
