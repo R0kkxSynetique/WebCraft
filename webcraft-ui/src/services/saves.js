@@ -1,9 +1,14 @@
-export const getSaves = async (userId) => {
+export const getSaves = async () => {
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/saves`, {
+    let userId = localStorage.getItem("user-id")
+
+
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${userId}`, {
         method: 'GET',
         headers: new Headers({ 'Content-Type': 'application/json' }),
     })
+
+    console.log(await data.json())
 
     return await data.json();
 }
@@ -52,17 +57,20 @@ export const getInventory = async () => {
 
 export const createSave = async (name) => {
 
+    let userId = localStorage.getItem("user-id")
 
     let save = {
         // "owner_id": localStorage.getItem("user-id"),
-        "name": name,
-        "date": new Date().getTime()
+        "name": name.toString(),
+        "date": new Date().getTime().toString()
     }
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/saves/create`, {
+    console.log(save)
+
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${userId}/create`, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: save
+        body: JSON.stringify(save)
     })
 
     return await data.json();
