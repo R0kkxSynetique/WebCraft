@@ -1,4 +1,6 @@
 from mongo import *
+from fastapi import FastAPI, HTTPException
+
 
 def transform_array(ingredients):
     
@@ -124,9 +126,12 @@ def getRecipe(ingredients):
     recipe = db.getRecipeResultByIngredientsId(ingredients_id)
     print(recipe)
     if not recipe:
-        return JSONResponse(db.getRecipeResultByIngredientsId(ingredients))
-    else:
-        return JSONResponse(recipe)
+        recipe = db.getRecipeResultByIngredientsId(ingredients)
+    
+    if not recipe:
+        raise HTTPException(status_code=404, detail="Recipe not found")
+    
+    return db.getItemById(recipe["id"])
     
              
                  
