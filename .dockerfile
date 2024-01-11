@@ -1,9 +1,8 @@
 FROM mongo
 
-ARG HOST
-ARG DB
+ARG CONNECTION_STRING
 ARG COLLECTION
 ARG FILE_PATH
 
 COPY ${FILE_PATH} /init.json
-CMD mongoimport --host ${HOST} --db ${DB} --collection ${COLLECTION} --type json --file /init.json --jsonArray
+CMD mongoimport --uri "${CONNECTION_STRING}" --collection ${COLLECTION} --type json --file /init.json --jsonArray -vvv

@@ -62,14 +62,18 @@ class Mongo:
         res = coll.insert_one(inventory)
         return JSONResponse(content={"message": "createInventory"})
 
-    def getRecipesByIngredientsId(self, ingredients):
+    def getRecipeResultByIngredientsId(self, ingredients):
         coll = self.__db["recipes"]
         cursor = coll.find({}, {"_id": 0})
+        res = {}
         for document in cursor:
             for key, value in document.items():
                 if "inShape" in value and value["inShape"] == ingredients:
-                    return document
-        return None
+                    res = document[key]["result"]
+                elif "ingredients" in value and value["ingredients"] == ingredients:
+                    res = document[key]["result"]
+        return JSONResponse(content=res)
+    
     def updateInventory(self, inventory_id, name, date):
         coll = self.__db["inventories"]
         obj_id = ObjectId(inventory_id)
