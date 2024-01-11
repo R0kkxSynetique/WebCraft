@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 
 from bson.objectid import ObjectId
 
+from itertools import permutations
 class Mongo:
     def __init__(self):
         self.__db = self.__get_database()
@@ -66,14 +67,18 @@ class Mongo:
         coll = self.__db["recipes"]
         cursor = coll.find({}, {"_id": 0})
         res = {}
+        if not any(isinstance(i, list) for i in ingredients):
+            all_permutations = list(permutations(ingredients))
         for document in cursor:
             for key, value in document.items():
                 if "inShape" in value and value["inShape"] == ingredients:
                     res = document[key]["result"]
-                elif "ingredients" in value and value["ingredients"] == ingredients:
+                elif (
+                    "ingredients" in value
+                    and tuple(value["ingredients"]) in all_permutations
+                ):
                     res = document[key]["result"]
         return res
-    
     def updateInventory(self, inventory_id, name, date):
         coll = self.__db["inventories"]
         obj_id = ObjectId(inventory_id)
