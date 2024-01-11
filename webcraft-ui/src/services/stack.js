@@ -27,7 +27,7 @@ export const getCraft = async (ingredients) => {
 }
 
 export const generateItem = async ()=> {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/generate`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/item/random`, {
         method: 'GET',
         headers: new Headers({'Content-Type': 'application/json'}),
     })
