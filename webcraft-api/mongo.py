@@ -64,17 +64,19 @@ class Mongo:
         return JSONResponse(content={"message": "createInventory"})
 
     def getRecipeResultByIngredientsId(self, ingredients):
+        is_not_nested = False
         coll = self.__db["recipes"]
         cursor = coll.find({}, {"_id": 0})
         res = {}
         if not any(isinstance(i, list) for i in ingredients):
+            is_not_nested = True
             all_permutations = list(permutations(ingredients))
         for document in cursor:
             for key, value in document.items():
                 if "inShape" in value and value["inShape"] == ingredients:
                     res = document[key]["result"]
                 elif (
-                    "ingredients" in value
+                    "ingredients" in value and is_not_nested
                     and tuple(value["ingredients"]) in all_permutations
                 ):
                     res = document[key]["result"]
