@@ -1,6 +1,7 @@
 from typing import Union
 from dotenv import load_dotenv, find_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from service.save import *
 from service.item import *
 from service.recipe import *
@@ -15,6 +16,14 @@ load_dotenv(find_dotenv())
 
 app = FastAPI()
 db = Mongo()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def route():
