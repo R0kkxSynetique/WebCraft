@@ -136,3 +136,5 @@ dist
 webcraft-api/__pycache__/
 
 webcraft-api/service/__pycache__/
+
+webcraft-api/models/__pycache__/

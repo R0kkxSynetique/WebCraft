@@ -1,8 +1,6 @@
 from mongo import *
-from random import *
 
-def getRandomItem():
-    db = Mongo()
+def getRandomItem(db: Mongo):
     return db.getRandomItem()
 
 
