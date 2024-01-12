@@ -25,3 +25,16 @@ class Recipe(BaseModel):
                 ):
                     res = document[key]["result"]
         return res
+
+    def isRequiredForACraft(itemId):
+        coll = mongo.db["recipes"]
+        recipe = coll.find_one(
+            {
+                "$or": [
+                    {"inShape": {"$elemMatch": {"$elemMatch": {"$eq": itemId}}}},
+                    {"ingredients": {"$in": [[itemId]]}},
+                ]
+            },
+            {"_id": 0},
+        )
+        return recipe
