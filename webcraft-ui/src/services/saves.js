@@ -40,7 +40,7 @@ export const save = async (logicalStacks) => {
 	let save = {
 		save_id: saveId,
 		items: items,
-        date: new Date().getTime().toString(),
+		date: new Date().getTime().toString(),
 	};
 
 	const data = await fetch(
@@ -111,11 +111,10 @@ export const deleteSave = async (saves, setSaves, saveRemovable) => {
 	setSaves(saves.filter((save) => save.id !== saveRemovable));
 
 	const data = await fetch(
-		`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/delete`,
+		`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/${saveRemovable}/delete`,
 		{
 			method: "DELETE",
 			headers: new Headers({ "Content-Type": "application/json" }),
-			body: JSON.stringify({ save_id: saveRemovable }),
 		}
 	);
 

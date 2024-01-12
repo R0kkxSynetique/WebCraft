@@ -2,9 +2,6 @@ from models.Save import Save as SaveModel
 
 
 class Save:
-    @staticmethod
-    def postSave(inventory_id, inventory):
-        return SaveModel.saveInventory(inventory_id, inventory)
 
     @staticmethod
     def getUserSaves(user_id):
@@ -27,9 +24,5 @@ class Save:
         return SaveModel.createInventory(user_id, name, date)
 
     @staticmethod
-    def saveInventory(inventory_id, items):
-        return SaveModel.saveInventory(inventory_id, items)
-
-    @staticmethod
-    def delete(inventory_id):
-        return SaveModel.deleteInventory(inventory_id)
+    def saveInventory(inventory_id, items, date):
+        return SaveModel.saveInventory(inventory_id, items, date)

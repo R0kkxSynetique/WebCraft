@@ -42,9 +42,9 @@ async def create_inventory(inventory: SaveModel):
     return Save.createInventory(inventory.owner_id, inventory.name, inventory.date)
 
 
-@app.delete("/save/delete")
-async def delete_save(save: SaveModel):
-    return Save.deleteSave(save.save_id)
+@app.delete("/save/{save_id}/delete")
+async def delete_save(save_id):
+    return Save.deleteSave(save_id)
 
 
 @app.patch("/save/rename")
@@ -59,7 +59,7 @@ async def get_random_item():
 
 @app.patch("/inventory/save")
 async def save_inventory(inventory: SaveModel):
-    return Save.saveInventory(inventory.save_id, inventory.items)
+    return Save.saveInventory(inventory.save_id, inventory.items, inventory.date)
 
 
 @app.post("/recipe/result")
