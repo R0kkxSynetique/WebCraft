@@ -17,10 +17,11 @@ export const getCraft = async (ingredients) => {
     });
 
     
-    let formattedIngredients = {'ingredients' : [[tmpFormat[1], tmpFormat[2], tmpFormat[3]], [tmpFormat[4], tmpFormat[5], tmpFormat[6]], [tmpFormat[7], tmpFormat[8], tmpFormat[9]]]}
+    let formattedIngredients = {"ingredients" : [[tmpFormat[1], tmpFormat[2], tmpFormat[3]], [tmpFormat[4], tmpFormat[5], tmpFormat[6]], [tmpFormat[7], tmpFormat[8], tmpFormat[9]]]}
+    //let formattedIngredients = {"ingredients" : ['coucou']}
 
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/recipe`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/recipe/result`, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(formattedIngredients)

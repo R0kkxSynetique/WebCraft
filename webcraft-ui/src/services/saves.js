@@ -3,7 +3,7 @@ export const getSaves = async () => {
     let userId = localStorage.getItem("user-id")
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${userId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/user/${userId}/saves`, {
             method: 'GET',
             headers: new Headers({ 'Content-Type': 'application/json' }),
         })
@@ -76,7 +76,7 @@ export const createSave = async (name) => {
 
     console.log(save)
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${userId}/create`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/user/${userId}/inventory`, {
         method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(save)
