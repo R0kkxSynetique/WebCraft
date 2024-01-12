@@ -343,7 +343,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
 
         let getNewStack = await generateItem()
 
-        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, getNewStack.name)
+         let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, getNewStack.name)
 
         generatingBox.appendChild(newStack.view())
         listenItem(generatingBox.firstChild, newStack)
@@ -376,12 +376,18 @@ const GameScript = (setIsCraftLoading, initialItems) => {
 
         let getNewStack = await getCraft(ingredients)
 
-        if (Object.keys(getNewStack).length !== 0) {
+
+
+        if (getNewStack && getNewStack.stackSize && getNewStack.id && getNewStack.name) {
             let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1001, getNewStack.name)
             craftingBox.appendChild(newStack.view())
             listenItem(craftingBox.firstChild, newStack)
             logicalStacks.push(newStack)
         }
+  
+
+        // check if getNewStack is not empty
+
 
         setIsCraftLoading(false)
     }
@@ -398,10 +404,13 @@ const GameScript = (setIsCraftLoading, initialItems) => {
     // Load initial items state
     let id = 0
 
-    initialItems.forEach(item => {
-        logicalStacks.push(new Stack(item.quantity, item.id, item.slot, item.name, id))
-        id--
-    })
+    if (initialItems.length > 0) {
+
+        initialItems.forEach(item => {
+            logicalStacks.push(new Stack(item.quantity, item.id, item.slot, item.name, id))
+            id--
+        })
+    }
 
     // spawn all stacks on board
     logicalStacks.forEach(stack => {

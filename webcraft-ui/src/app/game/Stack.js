@@ -8,6 +8,7 @@ class Stack {
         this._itemId = itemId;
         this._itemsCount = itemsCount;
         this.itemName = name;
+        
         this.class = `icon-minecraft-${this.itemName.toLowerCase().replaceAll("_", '-')}`
     }
 

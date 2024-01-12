@@ -23,11 +23,10 @@ export const getSaves = async () => {
 }
 
 
-
-
 export const save = async (logicalStacks) => {
 
     let items = []
+    let saveId = new URLSearchParams(window.location.search).get("save")
 
     logicalStacks.forEach(stack => {
         items.push({
@@ -40,13 +39,12 @@ export const save = async (logicalStacks) => {
 
     let save = {
         "owner_id": localStorage.getItem("user-id"),
-        "inventory_id": new URLSearchParams(window.location.search).get("save"),
         "date": new Date().getTime(),
         "items": items
     }
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save`, {
-        method: 'PUT',
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/${saveId}`, {
+        method: 'POST',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(save)
     })
