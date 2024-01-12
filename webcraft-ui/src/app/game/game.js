@@ -45,6 +45,35 @@ const GameScript = (setIsCraftLoading, initialItems) => {
         }
     }
 
+    function billCraft() {
+        // Remove 1 quantity of each ingredient in the crafting table
+        for (let i = 1; i < 10; i++) {
+            let box = document.getElementById(`box-${i}`)
+
+            if (box.firstChild) {
+
+                let stack = findStackInstance(box.firstChild.dataset.stackId)
+                
+                //decrement stack
+                if (stack.count > 1) {
+                    stack.add(-1)
+                    if (stack.count > 1) {
+                        box.firstChild.dataset.count = stack.count
+                    } else {
+                        box.firstChild.dataset.count = ""
+                    }
+                //remove stack
+                } else {
+                    logicalStacks = logicalStacks.filter(function (logicalStack) {
+                        return logicalStack.stackId !== stack.stackId
+                    })
+
+                    box.firstChild.parentNode.innerHTML = ""
+                }
+            }
+        }
+        getCraftResult()
+    }
 
     function listenItem(stack, stackLogic = findStackInstance(stack.dataset.stackId)) {
 
@@ -91,6 +120,10 @@ const GameScript = (setIsCraftLoading, initialItems) => {
                 }
             }
 
+            if (stackLogic.location == 1001) {
+                billCraft()
+            }
+
             if (stackLogic.location > 0 && stackLogic.location < 10) {
                 getCraftResult()
             }
@@ -120,6 +153,10 @@ const GameScript = (setIsCraftLoading, initialItems) => {
                 currentlyDraggedStack = null
                 holderBox.innerHTML = ""
                 move(e, stackLogic, stack)
+            }
+
+            if (stackLogic.location == 1001) {
+                billCraft()
             }
 
             if (stackLogic.location > 0 && stackLogic.location < 10) {
@@ -404,13 +441,13 @@ const GameScript = (setIsCraftLoading, initialItems) => {
     let id = 0
 
     if (initialItems.items.length > 0) {
-		initialItems.items.forEach((item) => {
-			logicalStacks.push(
-				new Stack(item.quantity, item.id, item.slot, item.name, id)
-			);
-			id--;
-		});
-	}
+        initialItems.items.forEach((item) => {
+            logicalStacks.push(
+                new Stack(item.quantity, item.id, item.slot, item.name, id)
+            );
+            id--;
+        });
+    }
 
     // spawn all stacks on board
     logicalStacks.forEach(stack => {
