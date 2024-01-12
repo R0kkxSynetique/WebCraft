@@ -3,11 +3,10 @@ from fastapi.responses import JSONResponse
 from service.save import Save
 from service.item import Item
 from service.recipe import Recipe
-from service.inventory import Inventory
 
 from fastapi.middleware.cors import CORSMiddleware
 from models.CraftingTable import CraftingTable as CraftingTableModel
-from models.Inventory import Inventory as InventoryModel
+
 from models.Save import Save as SaveModel
 
 
@@ -22,9 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def route():
-
     return {"message": "Welcome to WebCraft API"}
 
 
@@ -35,20 +34,20 @@ async def get_user_saves(user_id):
 
 @app.get("/user/{user_id}/inventory/{inventory_id}")
 async def get_user_inventory(user_id, inventory_id):
-    return Inventory.getInventory(user_id, inventory_id)
+    return Save.getInventory(user_id, inventory_id)
 
 
-@app.post("/user/{owner_id}/inventory")
-async def create_inventory(owner_id: str, inventory: InventoryModel):
-    return Inventory.createInventory(owner_id, inventory.name, inventory.date)
+@app.post("/user/inventory/create")
+async def create_inventory(inventory: SaveModel):
+    return Save.createInventory(inventory.owner_id, inventory.name, inventory.date)
 
 
-@app.delete("/save/{save_id}")
-async def delete_save(save_id):
-    return Save.deleteSave(save_id)
+@app.delete("/save/delete")
+async def delete_save(save: SaveModel):
+    return Save.deleteSave(save.save_id)
 
 
-@app.put("/save/{save_id}/rename")
+@app.patch("/save/{save_id}/rename")
 async def rename_save(save_id, save: SaveModel):
     return Save.renameSave(save_id, save.name)
 
@@ -58,9 +57,9 @@ async def get_random_item():
     return JSONResponse(content=Item.getRandomItem())
 
 
-@app.put("/inventory/{inventory_id}/save")
-async def save_inventory(inventory_id, inventory: InventoryModel):
-    return Inventory.saveInventory(inventory_id, inventory.items)
+@app.patch("/inventory/{inventory_id}/save")
+async def save_inventory(inventory_id, inventory: SaveModel):
+    return Save.saveInventory(inventory_id, inventory.items)
 
 
 @app.post("/recipe/result")
