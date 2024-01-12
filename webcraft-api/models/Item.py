@@ -8,9 +8,9 @@ from models.Recipe import Recipe
 
 
 class Item(BaseModel):
-    def getItemById(id):
+    def getItemById(itemId):
         coll = mongo.db["items"]
-        item = coll.find_one({"id": id}, {"_id": 0})
+        item = coll.find_one({"id": int(itemId)}, {"_id": 0})
         return jsonable_encoder(item)
 
     def getRandomItem():

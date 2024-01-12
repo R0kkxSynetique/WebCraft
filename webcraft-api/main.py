@@ -5,10 +5,10 @@ from service.item import Item
 from service.recipe import Recipe
 
 from fastapi.middleware.cors import CORSMiddleware
+
 from models.CraftingTable import CraftingTable as CraftingTableModel
-
 from models.Save import Save as SaveModel
-
+from models.Item import Item as ItemModel
 
 app = FastAPI()
 
@@ -22,9 +22,9 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-async def route():
-    return {"message": "Welcome to WebCraft API"}
+@app.get("/{item_id}")
+async def route(item_id):
+    return JSONResponse(content=ItemModel.getItemById(item_id))
 
 
 @app.get("/user/{user_id}/saves")
