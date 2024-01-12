@@ -2,5 +2,5 @@ from pydantic import BaseModel
 
 
 class CraftingTable(BaseModel):
-    ingredients: dict
+    ingredients: list[list]
 
