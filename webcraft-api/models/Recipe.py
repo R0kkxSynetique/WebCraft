@@ -10,6 +10,8 @@ class Recipe(BaseModel):
             {"$or": [{"inShape": ingredients}, {"ingredients": {"$in": ingredients}}]},
             {"_id": 0},
         )
+        if recipe is None:
+            return
         return recipe["result"]
 
     def isRequiredForACraft(itemId):

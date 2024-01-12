@@ -35,7 +35,7 @@ async def get_user_saves(user_id):
 
 @app.get("/user/{user_id}/inventory/{inventory_id}")
 async def get_user_inventory(user_id, inventory_id):
-    return JSONResponse(content=Inventory.getInventory(user_id, inventory_id))
+    return Inventory.getInventory(user_id, inventory_id)
 
 
 @app.post("/user/{owner_id}/inventory")

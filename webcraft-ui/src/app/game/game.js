@@ -404,13 +404,14 @@ const GameScript = (setIsCraftLoading, initialItems) => {
     // Load initial items state
     let id = 0
 
-    if (initialItems.length > 0) {
-
-        initialItems.forEach(item => {
-            logicalStacks.push(new Stack(item.quantity, item.id, item.slot, item.name, id))
-            id--
-        })
-    }
+    if (initialItems.items.length > 0) {
+		initialItems.items.forEach((item) => {
+			logicalStacks.push(
+				new Stack(item.quantity, item.id, item.slot, item.name, id)
+			);
+			id--;
+		});
+	}
 
     // spawn all stacks on board
     logicalStacks.forEach(stack => {

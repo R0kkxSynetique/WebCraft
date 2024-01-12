@@ -38,13 +38,11 @@ export const save = async (logicalStacks) => {
     })
 
     let save = {
-        "owner_id": localStorage.getItem("user-id"),
-        "date": new Date().getTime(),
         "items": items
     }
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/${saveId}`, {
-        method: 'POST',
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/inventory/${saveId}/save`, {
+        method: 'PUT',
         headers: new Headers({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(save)
     })
@@ -55,9 +53,11 @@ export const save = async (logicalStacks) => {
 
 export const getInventory = async () => {
 
+    let userId = localStorage.getItem("user-id");
+
     let inventory_id = new URLSearchParams(window.location.search).get("save")
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/${inventory_id}`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/user/${userId}/inventory/${inventory_id}`, {
         method: 'GET',
         headers: new Headers({ 'Content-Type': 'application/json' }),
     })
