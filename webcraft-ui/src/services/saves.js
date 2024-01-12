@@ -38,8 +38,9 @@ export const save = async (logicalStacks) => {
 	});
 
 	let save = {
-		id: saveId,
+		save_id: saveId,
 		items: items,
+        date: new Date().getTime().toString(),
 	};
 
 	const data = await fetch(
@@ -78,8 +79,6 @@ export const createSave = async (name) => {
 		date: new Date().getTime().toString(),
 		owner_id: userId.toString(),
 	};
-
-	console.log(save);
 
 	const data = await fetch(
 		`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/user/inventory/create`,

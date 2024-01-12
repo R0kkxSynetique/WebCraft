@@ -57,9 +57,9 @@ async def get_random_item():
     return JSONResponse(content=Item.getRandomItem())
 
 
-@app.patch("/inventory/{inventory_id}/save")
-async def save_inventory(inventory_id, inventory: SaveModel):
-    return Save.saveInventory(inventory_id, inventory.items)
+@app.patch("/inventory/save")
+async def save_inventory(inventory: SaveModel):
+    return Save.saveInventory(inventory.save_id, inventory.items)
 
 
 @app.post("/recipe/result")
