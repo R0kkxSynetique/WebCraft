@@ -1,14 +1,11 @@
 from models.Save import Save as SaveModel
-from fastapi import HTTPException
 
 
 class Save:
 
     @staticmethod
     def getUserSaves(user_id):
-        saves = SaveModel.getUserSavesWithoutItems(user_id)
-        if not saves:
-            raise HTTPException(status_code=404, detail="Saves not found")
+        return SaveModel.getUserSavesWithoutItems(user_id)
     
 
     @staticmethod
@@ -21,10 +18,7 @@ class Save:
 
     @staticmethod
     def getInventory(user_id, inventory_id):
-        save = SaveModel.getInventory(user_id, inventory_id)
-        if not save:
-            raise HTTPException(status_code=404, detail="Save not found")
-        return save
+        return SaveModel.getInventory(user_id, inventory_id)
 
     @staticmethod
     def createInventory(user_id, name: str, date: str):

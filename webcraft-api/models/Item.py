@@ -7,6 +7,7 @@ from models.Recipe import Recipe
 
 class Item(BaseModel):
     def getItemById(itemId):
+        print(itemId)
         coll = mongo.db["items"]
         item = coll.find_one({"id": int(itemId)}, {"_id": 0})
         return item

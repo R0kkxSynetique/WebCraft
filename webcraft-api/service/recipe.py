@@ -68,5 +68,6 @@ class Recipe:
             raise HTTPException(status_code=404, detail="Recipe not found")
 
         item = ItemModel.getItemById(recipe["id"])
+        print(item)
         item["quantity"] = recipe["count"]
         return item

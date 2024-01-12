@@ -1,5 +1,6 @@
 from bson import ObjectId
 from pydantic import BaseModel
+from fastapi import HTTPException
 
 from fastapi.encoders import jsonable_encoder
 from mongo import mongo
@@ -25,13 +26,13 @@ class Save(BaseModel):
 
     def deleteSave(saveId):
         coll = mongo.db["inventories"]
-        obj_id = ObjectId(saveId)
+        obj_id = Save.objectIdEncoder(saveId)
         res = coll.delete_one({"_id": obj_id})
         return res.deleted_count
 
     def renameSave(saveId, name):
         coll = mongo.db["inventories"]
-        obj_id = ObjectId(saveId)
+        obj_id = Save.objectIdEncoder(saveId)
         res = coll.update_one({"_id": obj_id}, {"$set": {"name": name}})
         return res.modified_count
     
@@ -44,7 +45,7 @@ class Save(BaseModel):
 
     def getInventory(userId, inventoryId):
         coll = mongo.db["inventories"]
-        obj_id = ObjectId(inventoryId)
+        obj_id = Save.objectIdEncoder(inventoryId)
         res = coll.find_one({"_id": obj_id, "owner_id": userId}, {"_id": 0, "items": 1})
         return res
 
@@ -56,8 +57,15 @@ class Save(BaseModel):
 
     def updateInventory(inventory_id, name, date):
         coll = mongo.db["inventories"]
-        obj_id = ObjectId(inventory_id)
+        obj_id = Save.objectIdEncoder(inventory_id)
         coll.update_one({"_id": obj_id}, {"$set": {"name": name, "date": date}})
         return {"message": "updateInventory"}
+    
+    def objectIdEncoder(obj):
+        try:
+            res = ObjectId(obj)
+        except Exception:
+            raise HTTPException(status_code=400, detail="Saves not found")
+        return res
 
     
