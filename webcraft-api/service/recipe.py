@@ -1,12 +1,10 @@
 from fastapi import HTTPException
 from models.Recipe import Recipe as RecipeModel
 from models.Item import Item as ItemModel
-from fastapi import HTTPException
 
 class Recipe:
     @staticmethod
     def transform_array(ingredients):
-    
         line1 = False
         line2 = False
         line3 = False
@@ -14,24 +12,47 @@ class Recipe:
         column2 = False
         column3 = False
 
-        if ingredients[0][0] is None and ingredients[0][1] is None and ingredients[0][2] is None:
+        if (
+            ingredients[0][0] is None
+            and ingredients[0][1] is None
+            and ingredients[0][2] is None
+        ):
             line1 = True
 
-        if ingredients[2][0] is None and ingredients[2][1] is None and ingredients[2][2] is None:
-                line3 = True
+        if (
+            ingredients[2][0] is None
+            and ingredients[2][1] is None
+            and ingredients[2][2] is None
+        ):
+            line3 = True
 
-        if ingredients[1][0] is None and ingredients[1][1] is None and ingredients[1][2] is None:
+        if (
+            ingredients[1][0] is None
+            and ingredients[1][1] is None
+            and ingredients[1][2] is None
+        ):
             if line1 is True or line3 is True:
                 line2 = True
 
-
-        if ingredients[0][0] is None and ingredients[1][0] is None and ingredients[2][0] is None:
+        if (
+            ingredients[0][0] is None
+            and ingredients[1][0] is None
+            and ingredients[2][0] is None
+        ):
             column1 = True
 
-        if ingredients[0][2] is None and ingredients[1][2] is None and ingredients[2][2] is None:
+        if (
+            ingredients[0][2] is None
+            and ingredients[1][2] is None
+            and ingredients[2][2] is None
+        ):
             column3 = True
 
-        if ingredients[0][1] is None and ingredients[1][1] is None and ingredients[2][1] is None:
+        if (
+            ingredients[0][1] is None
+            and ingredients[1][1] is None
+            and ingredients[2][1] is None
+        ):
             if column1 is True or column3 is True:
                 column2 = True
 
@@ -45,7 +66,7 @@ class Recipe:
         else:
             if line1 is False and line3 is False:
                 final_array.append(ingredients[1])
-        
+
         if line3 is False:
             final_array.append(ingredients[2])
 
@@ -104,12 +125,11 @@ class Recipe:
                 final_array[2].pop(2)
             except:
                 pass
-        
 
         return final_array
 
     @staticmethod
-    def getRecipe(ingredients):
+    def getRecipeResult(ingredients):
         ingredients = Recipe.transform_array(ingredients)
 
         # make a liste of all ingredients id
@@ -119,21 +139,12 @@ class Recipe:
                 if item is not None:
                     ingredients_id.append(item)
 
-        #check ingredients craft
-        recipe = Recipe.getRecipeResult(ingredients_id)
+        # check ingredients craft
+        recipe = RecipeModel.getRecipeResultByIngredientsId(ingredients_id)
         if not recipe:
-            recipe = Recipe.getRecipeResult(ingredients)
-        
-        if not recipe:
-            raise HTTPException(status_code=404, detail="Recipe not found")
-        
-        return RecipeModel.getItemById(recipe["id"])         
+            recipe = RecipeModel.getRecipeResultByIngredientsId(ingredients)
 
-    @staticmethod
-    def getRecipeResult(ingredients):
-        print (ingredients)
-        recipe = RecipeModel.getRecipeResultByIngredientsId(ingredients)
-        print (recipe)
         if not recipe:
             raise HTTPException(status_code=404, detail="Recipe not found")
+
         return ItemModel.getItemById(recipe["id"])

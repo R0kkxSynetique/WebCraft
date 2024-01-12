@@ -1,10 +1,11 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+from service.save import Save
+from service.item import Item
+from service.recipe import Recipe
+from service.inventory import Inventory
+
 from fastapi.middleware.cors import CORSMiddleware
-from service.save import *
-from service.item import *
-from service.recipe import *
-from service.inventory import *
-from mongo import *
 from models.CraftingTable import CraftingTable as CraftingTableModel
 from models.Inventory import Inventory as InventoryModel
 from models.Save import Save as SaveModel
@@ -29,12 +30,12 @@ async def route():
 
 @app.get("/user/{user_id}/saves")
 async def get_user_saves(user_id):
-    return Save.getUserSaves(user_id)
+    return JSONResponse(content=Save.getUserSaves(user_id))
 
 
 @app.get("/user/{user_id}/inventory/{inventory_id}")
 async def get_user_inventory(user_id, inventory_id):
-    return Inventory.getInventory(user_id, inventory_id)
+    return JSONResponse(content=Inventory.getInventory(user_id, inventory_id))
 
 
 @app.post("/user/{owner_id}/inventory")
@@ -54,7 +55,7 @@ async def rename_save(save_id, save: SaveModel):
 
 @app.get("/item/random")
 async def get_random_item():
-    return Item.getRandomItem()
+    return JSONResponse(content=Item.getRandomItem())
 
 
 @app.put("/inventory/{inventory_id}/save")
@@ -64,4 +65,4 @@ async def save_inventory(inventory_id, inventory: InventoryModel):
 
 @app.post("/recipe/result")
 async def get_recipe_result_from_crafting_table(craftingTable: CraftingTableModel):
-    return Recipe.getRecipe(craftingTable.ingredients)
+    return JSONResponse(content=Recipe.getRecipeResult(craftingTable.ingredients))
