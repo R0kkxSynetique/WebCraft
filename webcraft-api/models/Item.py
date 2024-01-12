@@ -1,7 +1,5 @@
 from pydantic import BaseModel
 
-from fastapi.encoders import jsonable_encoder
-
 from mongo import mongo
 
 from models.Recipe import Recipe
