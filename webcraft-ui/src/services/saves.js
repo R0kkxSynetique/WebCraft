@@ -96,11 +96,14 @@ export const createSave = async (name) => {
 export const renameSave = async (name) => {
 	let saveId = new URLSearchParams(window.location.search).get("save");
 
-	const data = await fetch(`http://localhost:5000/saves/${saveId}/rename`, {
-		method: "PUT",
-		headers: new Headers({ "Content-Type": "application/json" }),
-		body: JSON.stringify({ name: name }),
-	});
+	const data = await fetch(
+		`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/rename`,
+		{
+			method: "PATCH",
+			headers: new Headers({ "Content-Type": "application/json" }),
+			body: JSON.stringify({ name: name, save_id: saveId }),
+		}
+	);
 
 	return await data.json();
 };
@@ -113,7 +116,7 @@ export const deleteSave = async (saves, setSaves, saveRemovable) => {
 		{
 			method: "DELETE",
 			headers: new Headers({ "Content-Type": "application/json" }),
-            body: JSON.stringify({ save_id: saveRemovable }),
+			body: JSON.stringify({ save_id: saveRemovable }),
 		}
 	);
 

@@ -47,9 +47,9 @@ async def delete_save(save: SaveModel):
     return Save.deleteSave(save.save_id)
 
 
-@app.patch("/save/{save_id}/rename")
-async def rename_save(save_id, save: SaveModel):
-    return Save.renameSave(save_id, save.name)
+@app.patch("/save/rename")
+async def rename_save(save: SaveModel):
+    return Save.renameSave(save.save_id, save.name)
 
 
 @app.get("/item/random")
