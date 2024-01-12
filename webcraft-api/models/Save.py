@@ -60,8 +60,4 @@ class Save(BaseModel):
         coll.update_one({"_id": obj_id}, {"$set": {"name": name, "date": date}})
         return {"message": "updateInventory"}
 
-    def deleteInventory(inventory_id):
-        coll = mongo.db["inventories"]
-        obj_id = ObjectId(inventory_id)
-        coll.delete_one({"_id": obj_id})
-        return {"message": "deleteInventory"}
+    
