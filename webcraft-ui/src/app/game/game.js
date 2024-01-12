@@ -1,15 +1,12 @@
 import Stack from './Stack.js';
 import { getCraft, generateItem } from '@/services/stack.js';
 import { save } from '@/services/saves.js';
-import { useEffect } from 'react';
 
-const GameScript = (setIsCraftLoading, initialItems) => {
 
+const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
     // Array of all Stacks
     let logicalStacks = []
-
-
 
     // check if box is already in a stack location
     function checkBoxAvailability(boxId) {
@@ -380,14 +377,25 @@ const GameScript = (setIsCraftLoading, initialItems) => {
     // calls api
     const generate = async () => {
 
+
         let getNewStack = await generateItem()
 
-        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, getNewStack.displayName)
+        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName))
         generatingBox.appendChild(newStack.view())
         listenItem(generatingBox.firstChild, newStack)
         logicalStacks.push(newStack)
     }
 
+    const findSprite = (name, displayName) => {
+
+        let clearName = name.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-')
+
+        if (spritesNames.sprites.includes(clearName)) {
+            return name
+        }
+
+        return displayName
+    }
 
     const getCraftResult = async () => {
 
@@ -422,10 +430,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
             logicalStacks.push(newStack)
         }
 
-
         // check if getNewStack is not empty
-
-
         setIsCraftLoading(false)
     }
 
