@@ -8,7 +8,7 @@ from models.Recipe import Recipe
 
 
 class Item(BaseModel):
-    def getItemById(self, id):
+    def getItemById(id):
         coll = mongo.db["items"]
         item = coll.find_one({"id": id}, {"_id": 0})
         return jsonable_encoder(item)
