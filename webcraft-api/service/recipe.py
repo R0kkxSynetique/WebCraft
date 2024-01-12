@@ -147,4 +147,6 @@ class Recipe:
         if not recipe:
             raise HTTPException(status_code=404, detail="Recipe not found")
 
-        return ItemModel.getItemById(recipe["id"])
+        item = ItemModel.getItemById(recipe["id"])
+        item["quantity"] = recipe["count"]
+        return item

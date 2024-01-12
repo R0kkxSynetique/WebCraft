@@ -416,7 +416,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
         let getNewStack = await getCraft(ingredients)
 
         if (getNewStack && getNewStack.stackSize && getNewStack.id && getNewStack.name) {
-            let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1001, getNewStack.name)
+            let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1001, getNewStack.name)
             craftingBox.appendChild(newStack.view())
             listenItem(craftingBox.firstChild, newStack)
             logicalStacks.push(newStack)

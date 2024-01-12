@@ -11,7 +11,7 @@ class Item(BaseModel):
     def getItemById(itemId):
         coll = mongo.db["items"]
         item = coll.find_one({"id": int(itemId)}, {"_id": 0})
-        return jsonable_encoder(item)
+        return item
 
     def getRandomItem():
         coll = mongo.db["items"]
