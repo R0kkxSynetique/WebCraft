@@ -2,6 +2,7 @@ from fastapi import HTTPException
 from models.Recipe import Recipe as RecipeModel
 from models.Item import Item as ItemModel
 
+
 class Recipe:
     @staticmethod
     def transform_array(ingredients):
@@ -132,15 +133,14 @@ class Recipe:
     def getRecipeResult(ingredients):
         ingredients = Recipe.transform_array(ingredients)
 
-        # make a liste of all ingredients id
         ingredients_id = []
         for line in ingredients:
             for item in line:
                 if item is not None:
                     ingredients_id.append(item)
 
-        # check ingredients craft
         recipe = RecipeModel.getRecipeResultByIngredientsId(ingredients_id)
+
         if not recipe:
             recipe = RecipeModel.getRecipeResultByIngredientsId(ingredients)
 
