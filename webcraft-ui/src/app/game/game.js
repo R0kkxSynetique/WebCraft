@@ -343,8 +343,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
 
         let getNewStack = await generateItem()
 
-         let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, getNewStack.name)
-
+        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, getNewStack.displayName)
         generatingBox.appendChild(newStack.view())
         listenItem(generatingBox.firstChild, newStack)
         logicalStacks.push(newStack)
@@ -384,7 +383,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
             listenItem(craftingBox.firstChild, newStack)
             logicalStacks.push(newStack)
         }
-  
+
 
         // check if getNewStack is not empty
 
