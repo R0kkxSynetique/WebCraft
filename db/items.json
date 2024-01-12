@@ -732,12 +732,6 @@
 		"stackSize": 64
 	},
 	{
-		"id": 162,
-		"displayName": "Wood",
-		"name": "log2",
-		"stackSize": 64
-	},
-	{
 		"id": 163,
 		"displayName": "Acacia Wood Stairs",
 		"name": "acacia_stairs",
