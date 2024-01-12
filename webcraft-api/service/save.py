@@ -2,11 +2,9 @@ from models.Save import Save as SaveModel
 
 
 class Save:
-
     @staticmethod
     def getUserSaves(user_id):
         return SaveModel.getUserSavesWithoutItems(user_id)
-    
 
     @staticmethod
     def deleteSave(save_id):

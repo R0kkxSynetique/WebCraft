@@ -1,3 +1,4 @@
+from itertools import permutations
 from pydantic import BaseModel
 
 from mongo import mongo
@@ -15,10 +16,13 @@ class Recipe(BaseModel):
                 {"_id": 0},
             )
         elif not is_nested:
-            recipe = coll.find_one(
-                {"ingredients": ingredients},
-                {"_id": 0},
-            )
+            for permutation in list(map(list, set(map(tuple, permutations(ingredients))))):
+                recipe = coll.find_one(
+                    {"ingredients": permutation},
+                    {"_id": 0},
+                )
+                if recipe:
+                    break
         if recipe:
             return recipe["result"]
         return False

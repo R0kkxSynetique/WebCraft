@@ -35,7 +35,7 @@ class Save(BaseModel):
         obj_id = Save.objectIdEncoder(saveId)
         res = coll.update_one({"_id": obj_id}, {"$set": {"name": name}})
         return res.modified_count
-    
+
     def saveInventory(inventoryId, items, date):
         coll = mongo.db["inventories"]
         res = coll.update_one(
@@ -60,12 +60,10 @@ class Save(BaseModel):
         obj_id = Save.objectIdEncoder(inventory_id)
         coll.update_one({"_id": obj_id}, {"$set": {"name": name, "date": date}})
         return {"message": "updateInventory"}
-    
+
     def objectIdEncoder(obj):
         try:
             res = ObjectId(obj)
         except Exception:
             raise HTTPException(status_code=400, detail="Saves not found")
         return res
-
-    
