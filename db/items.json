@@ -714,12 +714,6 @@
 		"stackSize": 64
 	},
 	{
-		"id": 159,
-		"displayName": "Stained Clay",
-		"name": "stained_hardened_clay",
-		"stackSize": 64
-	},
-	{
 		"id": 160,
 		"displayName": "Stained Glass Pane",
 		"name": "stained_glass_pane",
@@ -783,12 +777,6 @@
 		"id": 171,
 		"displayName": "Carpet",
 		"name": "carpet",
-		"stackSize": 64
-	},
-	{
-		"id": 172,
-		"displayName": "Hardened Clay",
-		"name": "hardened_clay",
 		"stackSize": 64
 	},
 	{
