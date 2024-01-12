@@ -59,7 +59,7 @@ async def get_random_item():
 
 @app.patch("/inventory/save")
 async def save_inventory(inventory: SaveModel):
-    return Save.saveInventory(inventory.save_id, inventory.items)
+    return Save.saveInventory(inventory.save_id, inventory.items, inventory.date)
 
 
 @app.post("/recipe/result")

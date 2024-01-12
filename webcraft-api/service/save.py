@@ -24,5 +24,5 @@ class Save:
         return SaveModel.createInventory(user_id, name, date)
 
     @staticmethod
-    def saveInventory(inventory_id, items):
-        return SaveModel.saveInventory(inventory_id, items)
+    def saveInventory(inventory_id, items, date):
+        return SaveModel.saveInventory(inventory_id, items, date)

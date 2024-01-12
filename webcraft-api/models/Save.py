@@ -35,10 +35,10 @@ class Save(BaseModel):
         res = coll.update_one({"_id": obj_id}, {"$set": {"name": name}})
         return res.modified_count
     
-    def saveInventory(inventoryId, items):
+    def saveInventory(inventoryId, items, date):
         coll = mongo.db["inventories"]
         res = coll.update_one(
-            {"_id": ObjectId(inventoryId)}, {"$set": {"items": items}}
+            {"_id": ObjectId(inventoryId)}, {"$set": {"items": items, "date": date}}
         )
         return res.raw_result
 
