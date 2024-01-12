@@ -22,11 +22,6 @@ app.add_middleware(
 )
 
 
-@app.get("/{item_id}")
-async def route(item_id):
-    return JSONResponse(content=ItemModel.getItemById(item_id))
-
-
 @app.get("/user/{user_id}/saves")
 async def get_user_saves(user_id):
     return JSONResponse(content=Save.getUserSaves(user_id))
