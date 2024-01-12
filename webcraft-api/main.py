@@ -8,7 +8,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from models.CraftingTable import CraftingTable as CraftingTableModel
 from models.Save import Save as SaveModel
-from models.Item import Item as ItemModel
 
 app = FastAPI()
 
