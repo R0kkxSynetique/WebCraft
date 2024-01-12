@@ -23,7 +23,8 @@ app.add_middleware(
 
 @app.get("/")
 async def route():
-    return ([[264, 264, None], [None, 280, None], [None, 280, None]])
+
+    return {"message": "Welcome to WebCraft API"}
 
 
 @app.get("/user/{user_id}/saves")
