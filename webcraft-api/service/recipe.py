@@ -1,5 +1,4 @@
 from fastapi import HTTPException
-from fastapi.responses import JSONResponse
 from models.Recipe import Recipe as RecipeModel
 from models.Item import Item as ItemModel
 
@@ -131,7 +130,7 @@ class Recipe:
         return final_array
 
     @staticmethod
-    def getRecipe(ingredients):
+    def getRecipeResult(ingredients):
         ingredients = Recipe.transform_array(ingredients)
 
         # make a liste of all ingredients id
@@ -142,15 +141,11 @@ class Recipe:
                     ingredients_id.append(item)
 
         # check ingredients craft
-        recipe = Recipe.getRecipeResult(ingredients_id)
+        recipe = RecipeModel.getRecipeResultByIngredientsId(ingredients_id)
         if not recipe:
-            recipe = Recipe.getRecipeResult(ingredients)
+            recipe = RecipeModel.getRecipeResultByIngredientsId(ingredients)
 
         if not recipe:
             raise HTTPException(status_code=404, detail="Recipe not found")
 
-        return JSONResponse(content=ItemModel.getItemById(recipe["id"]))
-
-    @staticmethod
-    def getRecipeResult(ingredients):
-        return RecipeModel.getRecipeResultByIngredientsId(ingredients)
+        return ItemModel.getItemById(recipe["id"])

@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from service.save import Save
 from service.item import Item
 from service.recipe import Recipe
@@ -14,12 +15,12 @@ app = FastAPI()
 
 @app.get("/user/{user_id}/saves")
 async def get_user_saves(user_id):
-    return Save.getUserSaves(user_id)
+    return JSONResponse(content=Save.getUserSaves(user_id))
 
 
 @app.get("/user/{user_id}/inventory/{inventory_id}")
 async def get_user_inventory(user_id, inventory_id):
-    return Inventory.getInventory(user_id, inventory_id)
+    return JSONResponse(content=Inventory.getInventory(user_id, inventory_id))
 
 
 @app.post("/user/{owner_id}/inventory")
@@ -39,7 +40,7 @@ async def rename_save(save_id, save: SaveModel):
 
 @app.get("/item/random")
 async def get_random_item():
-    return Item.getRandomItem()
+    return JSONResponse(content=Item.getRandomItem())
 
 
 @app.put("/inventory/{inventory_id}/save")
@@ -49,4 +50,4 @@ async def save_inventory(inventory_id, inventory: InventoryModel):
 
 @app.post("/recipe/result")
 async def get_recipe_result_from_crafting_table(craftingTable: CraftingTableModel):
-    return Recipe.getRecipe(craftingTable.ingredients)
+    return JSONResponse(content=Recipe.getRecipeResult(craftingTable.ingredients))
