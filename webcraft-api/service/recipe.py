@@ -121,7 +121,7 @@ class Recipe:
         #check ingredients craft
         recipe = Recipe.getRecipeResult(ingredients_id)
         if not recipe:
-            recipe = RecipeModel.getRecipeResultByIngredientsId(ingredients)
+            recipe = Recipe.getRecipeResult(ingredients)
         
         if not recipe:
             raise HTTPException(status_code=404, detail="Recipe not found")
