@@ -37,8 +37,8 @@ async def get_user_inventory(user_id, inventory_id):
 
 
 @app.post("/user/{owner_id}/inventory")
-async def create_inventory(inventory: InventoryModel):
-    return Inventory.createInventory(inventory.owner_id, inventory.name, inventory.date)
+async def create_inventory(owner_id: str, inventory: InventoryModel):
+    return Inventory.createInventory(owner_id, inventory.name, inventory.date)
 
 
 @app.delete("/save/{save_id}")

@@ -6,7 +6,6 @@ from mongo import mongo
 
 
 class Inventory(BaseModel):
-    owner_id: str | None = None
     name: str | None = None
     date: str | None = None
     items: list | None = None
