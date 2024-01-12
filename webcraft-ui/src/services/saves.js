@@ -81,7 +81,7 @@ export const createSave = async (name) => {
 	};
 
 	const data = await fetch(
-		`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/user/inventory/create`,
+		`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/user/inventory`,
 		{
 			method: "POST",
 			headers: new Headers({ "Content-Type": "application/json" }),
@@ -111,7 +111,7 @@ export const deleteSave = async (saves, setSaves, saveRemovable) => {
 	setSaves(saves.filter((save) => save.id !== saveRemovable));
 
 	const data = await fetch(
-		`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/${saveRemovable}/delete`,
+		`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/save/${saveRemovable}`,
 		{
 			method: "DELETE",
 			headers: new Headers({ "Content-Type": "application/json" }),
