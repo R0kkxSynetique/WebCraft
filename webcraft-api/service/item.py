@@ -1,8 +1,6 @@
-from mongo import *
-from fastapi import FastAPI, HTTPException
+from models.Item import Item as ItemModel
 
-def getRandomItem(db: Mongo):
-    item = db.getRandomItem()
-    if not item:
-        raise HTTPException(status_code=404, detail="Item not found")
-    return JSONResponse(content=item)
+class Item:
+    @staticmethod
+    def getRandomItem():
+        return ItemModel.getRandomItem()

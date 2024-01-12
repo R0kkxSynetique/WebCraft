@@ -1,27 +1,19 @@
-from mongo import *
-from fastapi import FastAPI, HTTPException
+from models.Inventory import Inventory as InventoryModel
 
-def getAllInventory(user_id, db: Mongo):
-    inventory = db.getUserInventories(user_id)
-    print(inventory)
-    if not inventory:
-        raise HTTPException(status_code=404, detail="Inventory not found")
-    return JSONResponse(content=inventory)
 
-def createInventory(user_id, name: str,date: str, db: Mongo):
-    inventory =  db.createInventory(user_id, name, date)
-    if not inventory:
-        raise HTTPException(status_code=404, detail="Inventory not found")
-    return JSONResponse(content=inventory)
+class Inventory:
+    @staticmethod
+    def getInventory(user_id, inventory_id):
+        return InventoryModel.getInventory(user_id, inventory_id)
+    
+    @staticmethod
+    def createInventory(user_id, name: str, date: str):
+        return InventoryModel.createInventory(user_id, name, date)
 
-def updateInventory(inventory_id, name: str, date: str, db: Mongo):
-    inventory =  db.updateInventory(inventory_id, name, date)
-    if not inventory:
-        raise HTTPException(status_code=404, detail="Inventory not found")
-    return JSONResponse(content=inventory)
-
-def deleteInventory(inventory_id, db: Mongo):
-    inventory =  db.deleteInventory(inventory_id)
-    if not inventory:
-        raise HTTPException(status_code=404, detail="Inventory not found")
-    return JSONResponse(content=inventory)
+    @staticmethod
+    def saveInventory(inventory_id, items):
+        return InventoryModel.saveInventory(inventory_id, items)
+    
+    @staticmethod
+    def delete(inventory_id):
+        return InventoryModel.deleteInventory(inventory_id)
