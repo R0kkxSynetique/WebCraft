@@ -53,7 +53,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
             if (box.firstChild) {
 
                 let stack = findStackInstance(box.firstChild.dataset.stackId)
-                
+
                 //decrement stack
                 if (stack.count > 1) {
                     stack.add(-1)
@@ -62,7 +62,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
                     } else {
                         box.firstChild.dataset.count = ""
                     }
-                //remove stack
+                    //remove stack
                 } else {
                     logicalStacks = logicalStacks.filter(function (logicalStack) {
                         return logicalStack.stackId !== stack.stackId
@@ -125,6 +125,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
             }
 
             if (stackLogic.location > 0 && stackLogic.location < 10) {
+                stackLogic.location = 0
                 getCraftResult()
             }
         })
@@ -177,7 +178,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
 
                 currentStackViewOnBoard.parentNode.innerHTML = '';
                 holderBox.appendChild(currentlyDraggedStack.view);
-
+                //currentlyDraggedStack.instance.location = 0
             } else {
                 holderBox.appendChild(currentlyDraggedStack.view)
             }
@@ -285,6 +286,7 @@ const GameScript = (setIsCraftLoading, initialItems) => {
 
         // left click actions
         box.onclick = function (e) {
+
             // drop the dragged stack inthe box
             if (currentlyDraggedStack && boxId <= 999) {
                 if (checkBoxAvailability(boxId)) {
@@ -390,7 +392,6 @@ const GameScript = (setIsCraftLoading, initialItems) => {
     const getCraftResult = async () => {
 
         setIsCraftLoading(true)
-        // Remove current craft result
 
         //remove old stack from logicalStacks
         if (craftingBox.firstChild) {
@@ -404,15 +405,15 @@ const GameScript = (setIsCraftLoading, initialItems) => {
 
         let ingredients = []
 
-        logicalStacks.forEach(stack => {
-            if (stack.location > 0 ** stack.location < 10) {
-                ingredients.push(stack)
+        for (let i = 1; i < 10; i++) {
+            let box = document.getElementById(`box-${i}`)
+
+            if (box.firstChild) {
+                ingredients.push(findStackInstance(box.firstChild.dataset.stackId))
             }
-        });
+        }
 
         let getNewStack = await getCraft(ingredients)
-
-
 
         if (getNewStack && getNewStack.stackSize && getNewStack.id && getNewStack.name) {
             let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1001, getNewStack.name)
