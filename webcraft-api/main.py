@@ -64,4 +64,4 @@ async def save_inventory(inventory_id, inventory: InventoryModel):
 
 @app.post("/recipe/result")
 async def get_recipe_result_from_crafting_table(craftingTable: CraftingTableModel):
-    return Recipe.getRecipeResult(craftingTable.ingredients)
+    return Recipe.getRecipe(craftingTable.ingredients)

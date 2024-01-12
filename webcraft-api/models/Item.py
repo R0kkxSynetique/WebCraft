@@ -4,6 +4,8 @@ from fastapi.encoders import jsonable_encoder
 
 from mongo import mongo
 
+from models.Recipe import Recipe
+
 
 class Item(BaseModel):
     def getItemById(self, id):
@@ -13,6 +15,9 @@ class Item(BaseModel):
 
     def getRandomItem():
         coll = mongo.db["items"]
-        return coll.aggregate(
+        item = coll.aggregate(
             [{"$sample": {"size": 1}}, {"$project": {"_id": 0}}]
         ).next()
+        if Recipe.isRequiredForACraft(item["id"]):
+            return item
+        return Item.getRandomItem()
