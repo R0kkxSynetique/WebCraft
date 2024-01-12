@@ -740,7 +740,7 @@
 	{
 		"id": 165,
 		"displayName": "Slime Block",
-		"name": "slime",
+		"name": "slime_block",
 		"stackSize": 64
 	},
 	{
