@@ -26,9 +26,7 @@ class Stack {
 
     view() {
 
-        
-        let stackHtml = `<div data-count="${this._itemsCount > 1 ? this._itemsCount : ""}" data-stack-id="${this._stackId}" class="item">a</div>`
-         stackHtml = `<div data-count="${this._itemsCount > 1 ? this._itemsCount : ""}" data-stack-id="${this._stackId}" class="item icon-minecraft ${this.class}"></div>`
+        let stackHtml = `<div title='${this.itemName.replace("_", " ")}' data-count="${this._itemsCount > 1 ? this._itemsCount : ""}" data-stack-id="${this._stackId}" class="item icon-minecraft ${this.class}"></div>`
         
         return document.createRange().createContextualFragment(stackHtml)
     }
