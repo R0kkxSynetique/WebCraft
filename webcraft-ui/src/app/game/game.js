@@ -122,7 +122,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
             }
 
             if (stackLogic.location > 0 && stackLogic.location < 10) {
-                stackLogic.location = 0
+                //stackLogic.location = 0
                 getCraftResult()
             }
         })
@@ -420,6 +420,8 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 ingredients.push(findStackInstance(box.firstChild.dataset.stackId))
             }
         }
+
+        console.log(ingredients)
 
         let getNewStack = await getCraft(ingredients)
 
