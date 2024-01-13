@@ -367,7 +367,7 @@
 	},
 	{
 		"id": 80,
-		"displayName": "Snow layer",
+		"displayName": "Snow",
 		"name": "snow",
 		"stackSize": 64
 	},
