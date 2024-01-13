@@ -7,7 +7,7 @@
 
 .game {
     flex-direction: column;
-    /* overflow: hidden; */
+    overflow: hidden;
     height: 100%;
 }
 

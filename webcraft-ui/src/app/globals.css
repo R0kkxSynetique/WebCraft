@@ -21,7 +21,7 @@ body{
   margin: 0;
   height: 100dvh;
   width: 100dvw;
-  /* overflow: hidden; */
+  overflow: hidden;
   color: white;
   font-size: 1.4rem;
   text-shadow: var(--text-shadow);
@@ -51,7 +51,7 @@ th{
   color: #373737;
   text-shadow: none;
   white-space: nowrap;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .box {

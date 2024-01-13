@@ -86,9 +86,10 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 e.preventDefault();
             }
 
-            // split stack on simple right click
-            if (!currentlyDraggedStack) {
 
+
+            // split stack on simple right click
+            if (!currentlyDraggedStack && stackLogic.location != 1001) {
                 let newStack = stackLogic.split()
 
                 // drag splitted stack
@@ -116,11 +117,8 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 }
             }
 
-            if (stackLogic.location == 1001) {
-                billCraft()
-            }
-
             if (stackLogic.location > 0 && stackLogic.location < 10) {
+
                 //stackLogic.location = 0
                 getCraftResult()
             }
