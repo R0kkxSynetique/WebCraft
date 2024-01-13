@@ -26,5 +26,5 @@ class Item(BaseModel):
         if itemStackSize > 16:
             item["quantity"] = randint(1, int(itemStackSize / 6))
         else:
-            item["quantity"] = randint(1, itemStackSize/2)
+            item["quantity"] = randint(1, round(itemStackSize/2))
         return 
