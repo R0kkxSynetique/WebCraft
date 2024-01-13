@@ -48,39 +48,16 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![in game image](./img/gameplay-image.png)
 
 You are a pro of minecraft and know every recipe by heart? We'll see that! Try to craft the items without any help to prove your skills!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Features
-
-- [X] Access the crafting table
-- [X] Click and drop items on the crafting table
-- [X] Craft predefined items when the recipe is correct
-- [X] Store crafted items in the inventory
-- [X] Items can be used to craft other items
-- [X] Items can be discarded
-- [X] Stacking items and splitting stacks
-- [X] Generate a random items
-- [ ] Tools can be used to generate items
-- [ ] Tools can be crafted
-- [ ] Can process items (smelting, etc...)
-- [ ] Display the list of all the achievments (items crafted)
-- [ ] Achievments can be unlocked
-- [X] Can register player name on save
-- [X] Player can have multiple local saves
-- [X] All items are existing based on [PrismarineJS 1.8 data][PrismarineJS-url] 
-- [X] All receipes are existing based on [PrismarineJS 1.8 data][PrismarineJS-url]
-- [X] All sprites are existing
 
 ### Built With
 
@@ -118,6 +95,7 @@ To successfully execute the project, ensure the following prerequisites are met.
 
     ```sh
     npm install
+    npm run build
     ```
 
 3. Install python packages
@@ -133,13 +111,76 @@ To successfully execute the project, ensure the following prerequisites are met.
     cp ./webcraft-ui/.env.example ./webcraft-ui/.env
     ```
 
+5. Build the docker container. The container builds two services. The mongoDB database and the seeder of it. The seeder will use all the json files in the DB folder to create the collection based on the name of the file.
+   
+    ```sh
+    docker compose up --build -d
+    ```
+
+> `-d` option allows you to run the container in background.
+> 
+> `--build` option allows you to build the container and seeds the DB.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This chapter will explain how to run the project. Now that you have installed the project, you can run it. You first need to run the docker container.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```sh
+docker compose up -d
+```
+
+Then, you have to run the API before the UI.
+
+```sh
+uvicorn main:app
+```
+
+Once the API is running you can run the UI.
+
+```sh
+npm start
+```
+
+Now you can access the UI on <http://localhost:3000>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# Roadmap
+
+### Features
+
+- [X] Access the crafting table
+- [X] Click and drop items on the crafting table
+- [X] Craft predefined items when the recipe is correct
+- [X] Store crafted items in the inventory
+- [X] Items can be used to craft other items
+- [X] Items can be discarded
+- [X] Stacking items and splitting stacks
+- [X] Generate a random items
+- [ ] Tools can be used to generate items
+- [ ] Tools can be crafted
+- [ ] Can process items (smelting, etc...)
+- [ ] Display the list of all the achievments (items crafted)
+- [ ] Achievments can be unlocked
+- [X] Can register player name on save
+- [X] Player can have multiple local saves
+- [X] All items are existing based on [PrismarineJS 1.8 data][PrismarineJS-url] 
+- [X] All receipes are existing based on [PrismarineJS 1.8 data][PrismarineJS-url]
+- [X] All sprites are existing
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# Contributing
+
+If you wish to contribute to the project, you can fork the project and create a pull request. You can also create an issue if you find a bug or have an idea of a new feature.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# License
+
+Distributed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
