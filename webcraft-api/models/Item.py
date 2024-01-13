@@ -24,7 +24,9 @@ class Item(BaseModel):
     
     def getRandomItemRandomQuantity(item, itemStackSize):
         if itemStackSize > 16:
-            item["quantity"] = randint(1, int(itemStackSize / 6))
+            item["quantity"] = randint(1, round(itemStackSize / 4 - 2))
+        elif itemStackSize == 1:
+            item["quantity"] = 1
         else:
-            item["quantity"] = randint(1, round(itemStackSize/2))
+            item["quantity"] = randint(1, round(itemStackSize/2+0.5))
         return 
