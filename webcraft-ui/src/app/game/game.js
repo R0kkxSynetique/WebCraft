@@ -41,7 +41,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
         }
     }
 
-    function billCraft() {
+    function billCraft(check = true) {
         // Remove 1 quantity of each ingredient in the crafting table
         for (let i = 1; i < 10; i++) {
             let box = document.getElementById(`box-${i}`)
@@ -68,7 +68,9 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 }
             }
         }
-        getCraftResult()
+        if (check) {
+            getCraftResult()
+        }
     }
 
     function listenItem(stack, stackLogic = findStackInstance(stack.dataset.stackId)) {
@@ -343,6 +345,8 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
             } else if (currentlyDraggedStack && boxId == 1001) {
                 // TODO
 
+                let initialItemsCount = currentlyDraggedStack.instance.count
+
                 if (!checkBoxAvailability(1001)) {
                     let currentStack = findStackInstance(craftingBox.firstChild.dataset.stackId)
                     let newstack = currentlyDraggedStack.instance.merge(currentStack)
@@ -359,9 +363,13 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                         logicalStacks.push(newstack)
                         craftingBox.appendChild(newstack.view())
                         listenItem(craftingBox.firstChild)
-                    } else {
+                    }
+
+                    if (!newstack) {
                         getCraftResult()
                         billCraft()
+                    } else if (currentlyDraggedStack.instance.count == currentlyDraggedStack.instance.maxItems && initialItemsCount != currentlyDraggedStack.instance.count) {
+                        billCraft(false)
                     }
                 }
 
