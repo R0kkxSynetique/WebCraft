@@ -9,10 +9,9 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
     let logicalStacks = []
 
     // check if box is already in a stack location
-    function checkBoxAvailability(boxId) {
+    function checkBoxAvailability(boxId, stacks = logicalStacks) {
         let res = true
-
-        logicalStacks.forEach(stack => {
+        stacks.forEach(stack => {
             if (stack.location == boxId && stack.stackId != currentlyDraggedStack.instance.stackId) {
                 res = false
                 return
@@ -134,6 +133,11 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
             // do nothing if we are dragging a stack (to trigger only the box behind and drop the stack)
             if (!currentlyDraggedStack) {
                 e.stopPropagation();
+
+                if (stackLogic.location == 1001) {
+                    billCraft()
+                }
+
                 move(e, stackLogic, stack)
 
             } else if (currentlyDraggedStack && currentlyDraggedStack.instance.itemId != stackLogic.itemId) {
@@ -153,9 +157,6 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 move(e, stackLogic, stack)
             }
 
-            if (stackLogic.location == 1001) {
-                billCraft()
-            }
 
             if (stackLogic.location > 0 && stackLogic.location < 10) {
                 getCraftResult()
@@ -334,6 +335,34 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                     saveState()
                 }
 
+            } else if (currentlyDraggedStack && boxId == 1001) {
+                // TODO
+
+                if (!checkBoxAvailability(1001)) {
+                    let currentStack = findStackInstance(craftingBox.firstChild.dataset.stackId)
+                    let newstack = currentlyDraggedStack.instance.merge(currentStack)
+                    currentlyDraggedStack.view.dataset.count = currentlyDraggedStack.instance.count
+
+                    //remove old stack from logicalStacks
+                    logicalStacks = logicalStacks.filter(function (stack) {
+                        return stack.stackId !== currentStack.stackId
+                    })
+                    craftingBox.innerHTML = ""
+
+                    if (newstack) {
+                        newstack.location = 1001
+                        logicalStacks.push(newstack)
+                        craftingBox.appendChild(newstack.view())
+                        listenItem(craftingBox.firstChild)
+                    } else {
+                        getCraftResult()
+                        billCraft()
+                    }
+                }
+
+
+
+
             } else if (currentlyDraggedStack && boxId == 1002) {
                 // move to trash 
 
@@ -347,6 +376,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
                 saveState()
             }
+
         };
     }
 
@@ -398,18 +428,21 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
         return displayName
     }
 
+    const emptyCraftingTable = () => {
+        logicalStacks = logicalStacks.filter(function (stack) {
+            return stack.location !== 1001
+        })
+
+        craftingBox.innerHTML = ""
+    }
+
     const getCraftResult = async () => {
 
         setIsCraftLoading(true)
 
         //remove old stack from logicalStacks
         if (craftingBox.firstChild) {
-
-            logicalStacks = logicalStacks.filter(function (stack) {
-                return stack.location !== 1001
-            })
-
-            craftingBox.innerHTML = ""
+            // emptyCraftingTable()
         }
 
         let ingredients = []
@@ -426,9 +459,10 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         if (getNewStack && getNewStack.stackSize && getNewStack.id && getNewStack.name) {
             let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1001, findSprite(getNewStack.name, getNewStack.displayName), getNewStack.stackSize)
+
             craftingBox.appendChild(newStack.view())
-            listenItem(craftingBox.firstChild, newStack)
             logicalStacks.push(newStack)
+            listenItem(craftingBox.firstChild, newStack)
         }
 
         // check if getNewStack is not empty
@@ -451,9 +485,6 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
             id--;
         });
     }
-
-    // Check if there is a result to the initial craft
-    getCraftResult()
 
     // spawn all stacks on board
     logicalStacks.forEach(stack => {
