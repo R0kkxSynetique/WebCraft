@@ -28,13 +28,6 @@ const Board = ({isCraftLoading}) => {
                     <Inventory height={3} width={9} firstId={11} title="Invertory" />
                     <Inventory height={1} width={1} firstId={1002} type="trash" />
                 </div>
-<<<<<<< Updated upstream
-=======
-
-                <Inventory height={10} width={45} firstId={200} title="Invertory" />
-
-
->>>>>>> Stashed changes
             </div >
         </>
 

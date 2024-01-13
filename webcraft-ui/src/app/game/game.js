@@ -133,7 +133,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
             // do nothing if we are dragging a stack (to trigger only the box behind and drop the stack)
             if (!currentlyDraggedStack) {
                 e.stopPropagation();
-                
+
                 move(e, stackLogic, stack)
 
                 if (stackLogic.location == 1001) {
@@ -416,12 +416,8 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         let getNewStack = await generateItem()
 
-<<<<<<< Updated upstream
         let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName), getNewStack.stackSize)
 
-=======
-        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName))
->>>>>>> Stashed changes
         generatingBox.appendChild(newStack.view())
         listenItem(generatingBox.firstChild, newStack)
         logicalStacks.push(newStack)
@@ -429,7 +425,6 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
     const findSprite = (name, displayName) => {
 
-<<<<<<< Updated upstream
         let clearName = name.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-')
 
         if (spritesNames.sprites.includes(clearName)) {
@@ -446,25 +441,6 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         craftingBox.innerHTML = ""
     }
-=======
-
-        let clearName = name.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-')
-
-        if (spritesNames.sprites.includes(clearName)) {
-            console.log("found")
-            return name
-        }
-
-        // console.log(name)
-        // console.log(name.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-'))
-        // console.log(displayName)
-        // console.log(displayName.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-'))
-        // console.log("------------------------------------------------------")
-
-
-        return displayName
-    }
->>>>>>> Stashed changes
 
     const getCraftResult = async () => {
 
