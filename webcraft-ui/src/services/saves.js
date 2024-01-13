@@ -29,11 +29,13 @@ export const save = async (logicalStacks) => {
 	let saveId = new URLSearchParams(window.location.search).get("save");
 
 	logicalStacks.forEach((stack) => {
-		items.push({
+
+        items.push({
 			id: stack.itemId,
 			name: stack.itemName,
 			quantity: stack.count,
 			slot: stack.location,
+            stackSize: stack.maxItems
 		});
 	});
 

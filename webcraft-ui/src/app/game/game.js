@@ -227,7 +227,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 } else if (!box.firstChild) {
 
                     // create a new stack
-                    let newStack = new Stack(1, currentlyDraggedStack.instance.itemId, boxId, currentlyDraggedStack.instance.itemName)
+                    let newStack = new Stack(1, currentlyDraggedStack.instance.itemId, boxId, currentlyDraggedStack.instance.itemName, currentlyDraggedStack.instance.maxItems)
                     logicalStacks.push(newStack)
                     box.appendChild(newStack.view())
                     listenItem(box.firstChild, newStack)
@@ -380,7 +380,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         let getNewStack = await generateItem()
 
-        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName))
+        let newStack = new Stack(11, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName), getNewStack.stackSize)
         generatingBox.appendChild(newStack.view())
         listenItem(generatingBox.firstChild, newStack)
         logicalStacks.push(newStack)
@@ -421,12 +421,10 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
             }
         }
 
-        console.log(ingredients)
-
         let getNewStack = await getCraft(ingredients)
-
+        // TODO 2
         if (getNewStack && getNewStack.stackSize && getNewStack.id && getNewStack.name) {
-            let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1001, getNewStack.name)
+            let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1001, findSprite(getNewStack.name, getNewStack.displayName), getNewStack.stackSize)
             craftingBox.appendChild(newStack.view())
             listenItem(craftingBox.firstChild, newStack)
             logicalStacks.push(newStack)
@@ -441,21 +439,20 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
     }
 
 
-    // Check if there is a result to the initial craft
-    getCraftResult()
-
-
     // Load initial items state
     let id = 0
 
     if (initialItems.items.length > 0) {
         initialItems.items.forEach((item) => {
             logicalStacks.push(
-                new Stack(item.quantity, item.id, item.slot, item.name, id)
+                new Stack(item.quantity, item.id, item.slot, item.name, item.stackSize, id)
             );
             id--;
         });
     }
+
+    // Check if there is a result to the initial craft
+    getCraftResult()
 
     // spawn all stacks on board
     logicalStacks.forEach(stack => {

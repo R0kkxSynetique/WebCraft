@@ -1,14 +1,14 @@
 
 class Stack {
 
-    constructor(itemsCount, itemId, location, name, idIncrement = 0) {
+    constructor(itemsCount, itemId, location, name, maxItems, idIncrement = 0) {
 
         this.location = location;
-        this._stackId = Date.now() + idIncrement;
+        this._stackId = new Date().getTime() + idIncrement;
         this._itemId = itemId;
         this._itemsCount = itemsCount;
         this.itemName = name;
-        
+        this.maxItems = maxItems
         this.class = `icon-minecraft-${this.itemName.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-')}`
     }
 
@@ -34,7 +34,7 @@ class Stack {
     }
 
     add(count) {
-        if (this._itemsCount + count <= 64) {
+        if (this._itemsCount + count <= this.maxItems) {
             this._itemsCount += count;
             return -1 * count
         }
@@ -50,9 +50,9 @@ class Stack {
             return stack;
         }
 
-        if (this._itemsCount + stack.count > 64) {
-            let newStack = new Stack(this._itemsCount + stack.count - 64, this._itemId, 0, this.itemName);
-            this._itemsCount = 64;
+        if (this._itemsCount + stack.count > this.maxItems) {
+            let newStack = new Stack(this._itemsCount + stack.count - this.maxItems, this._itemId, 0, this.itemName, this.maxItems, -1000);
+            this._itemsCount = this.maxItems;
             return newStack;
 
         } else {
@@ -67,7 +67,7 @@ class Stack {
 
         this._itemsCount = oldStackCount;
 
-        return new Stack(newStackCount, this._itemId, 0, this.itemName);
+        return new Stack(newStackCount, this._itemId, 0, this.itemName, this.maxItems, -1000);
     }
 }
 
