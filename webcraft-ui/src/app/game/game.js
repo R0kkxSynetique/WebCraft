@@ -133,12 +133,13 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
             // do nothing if we are dragging a stack (to trigger only the box behind and drop the stack)
             if (!currentlyDraggedStack) {
                 e.stopPropagation();
+                
+                move(e, stackLogic, stack)
 
                 if (stackLogic.location == 1001) {
                     billCraft()
                 }
 
-                move(e, stackLogic, stack)
 
             } else if (currentlyDraggedStack && currentlyDraggedStack.instance.itemId != stackLogic.itemId) {
                 e.stopPropagation();
@@ -150,11 +151,16 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 box.appendChild(currentlyDraggedStack.instance.view())
                 listenItem(box.firstChild)
 
+                let boxId = stackLogic.location
                 stackLogic.location = 0
 
                 currentlyDraggedStack = null
                 holderBox.innerHTML = ""
                 move(e, stackLogic, stack)
+
+                if (boxId < 10 && boxId > 0) {
+                    getCraftResult()
+                }
             }
 
 
@@ -442,7 +448,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         //remove old stack from logicalStacks
         if (craftingBox.firstChild) {
-            // emptyCraftingTable()
+            emptyCraftingTable()
         }
 
         let ingredients = []
@@ -476,7 +482,6 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
     const saveState = () => {
         save(logicalStacks)
     }
-
 
     // Load initial items state
     let id = 0
