@@ -28,5 +28,5 @@ class Item(BaseModel):
         elif itemStackSize == 1:
             item["quantity"] = 1
         else:
-            item["quantity"] = randint(1, round(itemStackSize/2))
+            item["quantity"] = randint(1, round(itemStackSize/2+0.5))
         return 
