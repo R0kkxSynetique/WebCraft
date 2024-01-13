@@ -1,5 +1,5 @@
 import Stack from './Stack.js';
-import { getCraft, generateItem, getItemById } from '@/services/stack.js';
+import { getCraft, generateItem } from '@/services/stack.js';
 import { save } from '@/services/saves.js';
 
 
@@ -506,28 +506,6 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
     stackArray.forEach(stack => {
         listenItem(stack);
     });
-
-
-
-    test()
-
-    function test() {
-
-        for (let i = 1; i < 432; i++) {
-            let box = document.getElementById(`box-${i}`)
-
-            let item = getItemById(i)
-
-            // check if item is an empty object
-            if (Object.keys(item).length !== 0 && item.constructor === Object) {
-
-                new Stack(item.stackSize, item.id, 1000, findSprite(item.name, item.displayName))
-
-                box.appendChild(newStack.view())
-            }
-        }
-        console.log("test")
-    }
 
 }
 

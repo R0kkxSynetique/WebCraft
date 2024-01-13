@@ -38,12 +38,3 @@ export const generateItem = async () => {
 
     return await data.json();
 }
-
-export const getItemById = async (itemId) => {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_API_LINK}/${itemId}`, {
-        method: 'GET',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-    })
-
-    return await data.json();
-}
