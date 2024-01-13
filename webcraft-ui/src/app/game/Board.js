@@ -15,7 +15,6 @@ const Board = ({isCraftLoading}) => {
                     <div className='concat'>
                         
                         <Inventory height={1} width={1} firstId={1000} title="Item Generation" />
-                        <Inventory height={1} width={1} firstId={1002} type="trash" />
                     </div>
 
                     <div className='concat'>
