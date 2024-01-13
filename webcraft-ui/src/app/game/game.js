@@ -137,6 +137,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 move(e, stackLogic, stack)
 
                 if (stackLogic.location == 1001) {
+                    stackLogic.location = 0
                     billCraft()
                 }
 
