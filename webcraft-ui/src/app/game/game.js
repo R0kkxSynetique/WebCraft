@@ -320,7 +320,11 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
                     //merge stacks
                     let newStack = initialChildInstace.merge(currentlyDraggedStack.instance)
-                    initialChildView.dataset.count = initialChildInstace.count
+                    if (initialChildInstace.count > 1) {
+                        initialChildView.dataset.count = initialChildInstace.count
+                    } else {
+                        initialChildView.dataset.count = ""
+                    }
 
                     //whipe old stack
                     currentlyDraggedStack = null
@@ -350,7 +354,13 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
                 if (!checkBoxAvailability(1001)) {
                     let currentStack = findStackInstance(craftingBox.firstChild.dataset.stackId)
                     let newstack = currentlyDraggedStack.instance.merge(currentStack)
-                    currentlyDraggedStack.view.dataset.count = currentlyDraggedStack.instance.count
+
+
+                    if (currentlyDraggedStack.instance.count > 1) {
+                        currentlyDraggedStack.view.dataset.count = currentlyDraggedStack.instance.count
+                    } else {
+                        currentlyDraggedStack.view.dataset.count = ""
+                    }
 
                     //remove old stack from logicalStacks
                     logicalStacks = logicalStacks.filter(function (stack) {
