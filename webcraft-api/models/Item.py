@@ -1,3 +1,4 @@
+from random import randint
 from pydantic import BaseModel
 
 from mongo import mongo
@@ -17,5 +18,13 @@ class Item(BaseModel):
             [{"$sample": {"size": 1}}, {"$project": {"_id": 0}}]
         ).next()
         if Recipe.isRequiredForACraft(item["id"]):
+            Item.getRandomItemRandomQuantity(item, item["stackSize"])
             return item
         return Item.getRandomItem()
+    
+    def getRandomItemRandomQuantity(item, itemStackSize):
+        if itemStackSize > 16:
+            item["quantity"] = randint(1, int(itemStackSize / 6))
+        else:
+            item["quantity"] = randint(1, itemStackSize/2)
+        return 

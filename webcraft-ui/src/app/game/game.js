@@ -380,7 +380,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         let getNewStack = await generateItem()
 
-        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName))
+        let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName))
         generatingBox.appendChild(newStack.view())
         listenItem(generatingBox.firstChild, newStack)
         logicalStacks.push(newStack)
@@ -421,11 +421,9 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
             }
         }
 
-        console.log(ingredients)
-
         let getNewStack = await getCraft(ingredients)
 
-        if (getNewStack && getNewStack.stackSize && getNewStack.id && getNewStack.name) {
+        if (getNewStack && getNewStack.quantity && getNewStack.id && getNewStack.name) {
             let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1001, getNewStack.name)
             craftingBox.appendChild(newStack.view())
             listenItem(craftingBox.firstChild, newStack)
