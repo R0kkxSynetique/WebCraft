@@ -1,5 +1,5 @@
 import Stack from './Stack.js';
-import { getCraft, generateItem } from '@/services/stack.js';
+import { getCraft, generateItem, getItemById } from '@/services/stack.js';
 import { save } from '@/services/saves.js';
 
 
@@ -416,8 +416,12 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         let getNewStack = await generateItem()
 
+<<<<<<< Updated upstream
         let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName), getNewStack.stackSize)
 
+=======
+        let newStack = new Stack(getNewStack.stackSize, getNewStack.id, 1000, findSprite(getNewStack.name, getNewStack.displayName))
+>>>>>>> Stashed changes
         generatingBox.appendChild(newStack.view())
         listenItem(generatingBox.firstChild, newStack)
         logicalStacks.push(newStack)
@@ -425,6 +429,7 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
     const findSprite = (name, displayName) => {
 
+<<<<<<< Updated upstream
         let clearName = name.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-')
 
         if (spritesNames.sprites.includes(clearName)) {
@@ -441,6 +446,25 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         craftingBox.innerHTML = ""
     }
+=======
+
+        let clearName = name.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-')
+
+        if (spritesNames.sprites.includes(clearName)) {
+            console.log("found")
+            return name
+        }
+
+        // console.log(name)
+        // console.log(name.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-'))
+        // console.log(displayName)
+        // console.log(displayName.toLowerCase().replaceAll("_", '-').replaceAll(" ", '-'))
+        // console.log("------------------------------------------------------")
+
+
+        return displayName
+    }
+>>>>>>> Stashed changes
 
     const getCraftResult = async () => {
 
@@ -506,6 +530,28 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
     stackArray.forEach(stack => {
         listenItem(stack);
     });
+
+
+
+    test()
+
+    function test() {
+
+        for (let i = 1; i < 432; i++) {
+            let box = document.getElementById(`box-${i}`)
+
+            let item = getItemById(i)
+
+            // check if item is an empty object
+            if (Object.keys(item).length !== 0 && item.constructor === Object) {
+
+                new Stack(item.stackSize, item.id, 1000, findSprite(item.name, item.displayName))
+
+                box.appendChild(newStack.view())
+            }
+        }
+        console.log("test")
+    }
 
 }
 
