@@ -517,8 +517,8 @@
 	},
 	{
 		"id": 112,
-		"displayName": "Nether Brick",
-		"name": "nether_brick",
+		"displayName": "Nether Brick Block",
+		"name": "nether_brick_block",
 		"stackSize": 64
 	},
 	{
