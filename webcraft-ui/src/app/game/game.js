@@ -457,12 +457,16 @@ const GameScript = (setIsCraftLoading, initialItems, spritesNames) => {
 
         let getNewStack = await getCraft(ingredients)
 
+        let rand = Math.round(Math.random() * (10000000 - 1000000) + 1000000) * 999
+
         if (getNewStack && getNewStack.stackSize && getNewStack.id && getNewStack.name) {
-            let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1001, findSprite(getNewStack.name, getNewStack.displayName), getNewStack.stackSize)
+            let newStack = new Stack(getNewStack.quantity, getNewStack.id, 1001, findSprite(getNewStack.name, getNewStack.displayName), getNewStack.stackSize, rand)
 
             craftingBox.appendChild(newStack.view())
             logicalStacks.push(newStack)
             listenItem(craftingBox.firstChild, newStack)
+        } else {
+            emptyCraftingTable()
         }
 
         // check if getNewStack is not empty
