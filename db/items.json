@@ -314,7 +314,7 @@
 	{
 		"id": 67,
 		"displayName": "Cobblestone Stairs",
-		"name": "stone_stairs",
+		"name": "cobblestone_stairs",
 		"stackSize": 64
 	},
 	{
