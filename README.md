@@ -53,7 +53,7 @@
 
 ## About The Project
 
-![in game image](./img/gameplay-image.png)
+![in game image][product-screenshot]
 
 You are a pro of minecraft and know every recipe by heart? We'll see that! Try to craft the items without any help to prove your skills!
 
@@ -62,6 +62,7 @@ You are a pro of minecraft and know every recipe by heart? We'll see that! Try t
 ### Built With
 
 [![Next][Next.js]][Next-url]
+[![React][React]][React-url]
 [![Node][Node.Js]][Node-url]
 [![Python][Python]][Python-url]
 [![FastAPI][FastAPI]][FastAPI-url]
@@ -160,7 +161,7 @@ Now you can access the UI on <http://localhost:3000>
 - [X] Stacking items and splitting stacks
 - [X] Generate a random items
 - [ ] Tools can be used to generate items
-- [ ] Tools can be crafted
+- [X] Tools can be crafted
 - [ ] Can process items (smelting, etc...)
 - [ ] Display the list of all the achievments (items crafted)
 - [ ] Achievments can be unlocked
@@ -194,7 +195,7 @@ Distributed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
 [issues-url]: https://github.com/R0kkxSynetique/WebCraft/issues
 [license-shield]: https://img.shields.io/github/license/R0kkxSynetique/WebCraft.svg?style=for-the-badge
 [license-url]: https://github.com/R0kkxSynetique/WebCraft/blob/master/LICENSE.txt
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: img/gameplay-image.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs
 [Next-url]: https://nextjs.org/
 [Node.js]: https://img.shields.io/badge/node.js-000000?style=for-the-badge&logo=node.js
@@ -208,3 +209,5 @@ Distributed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
 [MongoDB-url]: https://www.mongodb.com/
 [Docker]: https://img.shields.io/badge/Docker-000000?style=for-the-badge&logo=docker
 [Docker-url]: https://www.docker.com/
+[React]: https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react
+[React-url]: https://reactjs.org/
