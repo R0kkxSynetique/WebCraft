@@ -19,9 +19,6 @@
   <p align="center">
     Web application based on minecraft crafting
     <br />
-    <a href="https://github.com/R0kkxSynetique/WebCraft"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
     <a href="https://github.com/R0kkxSynetique/WebCraft/issues">Report Bug</a>
     ·
     <a href="https://github.com/R0kkxSynetique/WebCraft/issues">Request Feature</a>
@@ -56,6 +53,8 @@
 ![in game image][product-screenshot]
 
 You are a pro of minecraft and know every recipe by heart? We'll see that! Try to craft the items without any help to prove your skills!
+
+If you are not a pro already, you can follow this [link](https://education.minecraft.net/wp-content/uploads/Crafting-Guide.pdf) to learn how to craft items.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -150,7 +149,7 @@ Now you can access the UI on <http://localhost:3000>
 
 # Roadmap
 
-### Features
+# Features
 
 - [X] Access the crafting table
 - [X] Click and drop items on the crafting table
