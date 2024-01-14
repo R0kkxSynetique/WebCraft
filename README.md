@@ -10,9 +10,6 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/R0kkxSynetique/WebCraft">
-    <img src="https://simpleicons.org/icons/minecraft.svg" alt="Logo" width="80" height="80" style="filter:invert(1);background:none">
-  </a>
 
 <h3 align="center">WebCraft</h3>
 
