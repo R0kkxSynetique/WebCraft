@@ -1,0 +1,248 @@
+:root{
+  --box-border-width: 3.5px;
+  --box-size:46px;
+
+  --grey: #808080;
+
+  --text-shadow: #373737 2px 2px;
+}
+
+@font-face {
+  font-family: 'minecraftregular';
+  src: url('../../public/fonts/minecraftregular-bmg3-webfont.woff') format('woff'),
+       url('../../public/fonts/minecraftregular-bmg3-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body{
+  font-family: minecraftregular;
+  position: relative;
+  margin: 0;
+  height: 100dvh;
+  width: 100dvw;
+  overflow: hidden;
+  color: white;
+  font-size: 1.4rem;
+  text-shadow: var(--text-shadow);
+}
+
+h1{
+  text-shadow: #373737 4px 4px;
+}
+
+body::before{
+ content:"";
+ position: absolute;
+ inset: 0;
+ background: url(../../public/images/dirt.jpg);
+ background-size: 5rem;
+ filter: brightness(36%);
+ z-index: -1;
+}
+
+td{
+  vertical-align: middle;
+  max-height: var(--box-size);
+}
+
+th{
+  text-align: start;
+  color: #373737;
+  text-shadow: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.box {
+  position: relative;
+  display: inline-block;
+  height: var(--box-size);
+  width: var(--box-size);
+  background-color: #8b8b8b;
+  box-shadow: 
+  calc(-1 * var(--box-border-width)) calc(-1 * var(--box-border-width)) 0 0 #373737,
+   calc(-1 * var(--box-border-width)) 0 0 0 #373737, 
+   0 calc(-1 * var(--box-border-width)) 0 0 #373737, 
+   var(--box-border-width) 0 0 0 #ffffff, 
+   0 var(--box-border-width) 0 0 #ffffff, 
+   var(--box-border-width) var(--box-border-width) 0 0 #ffffff, 
+   var(--box-border-width) calc(-1 * var(--box-border-width)) 0 0 #8b8b8b, 
+   calc(-1 * var(--box-border-width)) var(--box-border-width) 0 0 #8b8b8b;
+   margin: 0 var(--box-border-width);
+}
+
+.trash{
+  background-color: #ab7f7f;
+  cursor: default;
+  text-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #373737;
+}
+
+.box::before{
+  content: "";
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+
+.box:hover::before{
+  background-color: rgba(255, 255, 255,  0.4);
+}
+
+table{
+  padding: 20px;
+  border-collapse: separate; 
+  border-spacing: calc(var(--box-border-width) * 2);
+  background-color: #c6c6c6;
+  height: fit-content;
+  width: fit-content;
+  border-radius: calc(var(--box-border-width) * 2);
+}
+
+.concat{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #c6c6c6;
+  height: fit-content;
+  width: fit-content;
+
+  margin: 2rem;
+  border-radius: calc(var(--box-border-width) * 2);
+  border-left: 4px solid #fff;
+  border-top: 4px solid #fff;
+  border-right: 4px solid #5f5f5f;
+  border-bottom: 4px solid #5f5f5f;
+
+}
+
+.holding{
+  pointer-events: none;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+}
+
+.item{
+  display: inline-block;
+  position:absolute; 
+  width:  var(--box-size); 
+  height: var(--box-size);
+  transform: scale(1.4);
+  transform-origin: 0 0;
+  inset:0;
+}
+
+.item::after{
+  content : attr(data-count);
+  text-shadow: var(--text-shadow);
+  font-size: calc(var(--box-size) / 2.7);
+  position: absolute;
+  pointer-events: none;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+
+button, input[type="submit"] {
+  all:unset;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  height: 3rem;
+  outline: 2px solid black;
+  background-color: #888888;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 8px solid rgba(0, 0, 0, 0.4);
+  border-right: 4px solid rgba(0, 0, 0, 0.4);
+}
+
+button:hover, button:focus, input[type="submit"]:hover, input[type="submit"]:focus {
+  color: #ffffa0;
+  background: #7e88bf;
+}
+
+button:disabled {
+  background-color: #3c3c3c;
+  border-color: transparent;
+  color: #a2a2a2;
+  cursor: default;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  padding: 3rem 0 10rem 0;
+  flex-grow: 1; 
+}
+
+.page-title {
+  width: 100%;
+  text-align: center;
+  display: block;
+  padding-top: 3rem;
+  font-size: 2rem;
+  text-shadow: var(--text-shadow);
+}
+
+label {
+  color: #a0a0a0;
+  padding-bottom: 0.5rem;
+  width: 100%;
+  text-shadow: var(--text-shadow);
+}
+
+input[type="text"] {
+  border: 3px solid #a0a0a0;
+  background-color: black;
+  color: white;
+  font-family: minecraftregular;
+  width: 100%;
+  height: 3rem;
+  padding-left: 1rem;
+  font-size: 1.5rem;
+  
+}
+
+input[type="text"]:focus{
+  outline: none;
+}
+
+form div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+form button, form input[type="submit"] {
+  width: 100%;
+  height: 3rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.arrow {
+  width: 6rem;
+  height: 6rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url(../../public/images/gui-arrow.png);
+}
